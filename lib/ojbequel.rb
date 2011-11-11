@@ -1,17 +1,17 @@
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
 
-module KFSequel
+module OJBequel
 end
 
 require 'highline/import'
 require 'nokogiri'
 require 'active_support/inflector'
 
-require 'kfsequel/repo_db'
-require 'kfsequel/repository'
-require 'kfsequel/rb_string_factory'
-require 'kfsequel/utils'
+require 'ojbequel/repo_db'
+require 'ojbequel/repository'
+require 'ojbequel/rb_string_factory'
+require 'ojbequel/utils'
 require 'pp'
 require 'kernel'
 
-include KFSequel::Utils
+include OJBequel::Utils

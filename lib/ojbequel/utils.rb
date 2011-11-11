@@ -1,4 +1,4 @@
-module KFSequel
+module OJBequel
   module Utils
     def less(string)
       IO.popen("less -R -F", "w") do |less|

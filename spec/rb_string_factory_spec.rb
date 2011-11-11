@@ -1,11 +1,11 @@
-require_relative '../lib/kfsequel'
+require_relative '../lib/ojbequel'
 
-describe KFSequel::RBStringFactory, ".build" do
+describe OJBequel::RBStringFactory, ".build" do
   it "should build class files" do
-    repository = KFSequel::Repository.new(File.join(File.expand_path(File.dirname(__FILE__)), '..', 'ojb-vnd.xml'))
+    repository = OJBequel::Repository.new(File.join(File.expand_path(File.dirname(__FILE__)), '..', 'ojb-vnd.xml'))
     repository.parse
 
-    factory = KFSequel::RBStringFactory.new(repository)
+    factory = OJBequel::RBStringFactory.new(repository)
 
     vendor_class01 = repository.class_descriptors[:id => 1]
     vendor_class01.rb_klazz.should == "CampusParameter"

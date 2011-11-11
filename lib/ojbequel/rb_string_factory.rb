@@ -1,4 +1,4 @@
-class KFSequel::RBStringFactory
+class OJBequel::RBStringFactory
   def initialize(*repositories)
     @repositories = repositories
   end
@@ -25,7 +25,7 @@ class KFSequel::RBStringFactory
     end
     string = %{
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__))
-require 'kfs_database'
+require 'connection'
 
 }
 
@@ -62,7 +62,7 @@ class #{klazz_name}
   Definition = "#{string}"
 
   def self.definition
-    KFSequel::Utils.less Definition
+    OJBequel::Utils.less Definition
   end
 end
 DEFN
@@ -88,7 +88,7 @@ class #{klazz_name}
   Definition = "#{string}"
 
   def self.definition
-    KFSequel::Utils.less Definition
+    OJBequel::Utils.less Definition
   end
 end
 DEFN
@@ -114,7 +114,7 @@ DEFN
 #{string_close_thing}
 
   def self.ojb_entry
-    KFSequel::Utils.less OJBEntry
+    OJBequel::Utils.less OJBEntry
   end
 }
   end

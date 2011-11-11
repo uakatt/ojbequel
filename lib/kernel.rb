@@ -1,3 +1,5 @@
+# A patch to wirble would be better than the following... FYI.
+
 module Kernel
   alias :pp_original :pp
   def_delegators :$terminal, :color

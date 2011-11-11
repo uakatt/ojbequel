@@ -1,8 +1,8 @@
-require_relative '../lib/kfsequel'
+require_relative '../lib/ojbequel'
 
-describe KFSequel::Repository, ".parse" do
+describe OJBequel::Repository, ".parse" do
   it "should find class-descriptors" do
-    repository = KFSequel::Repository.new(File.join(File.expand_path(File.dirname(__FILE__)), '..', 'ojb-vnd.xml'))
+    repository = OJBequel::Repository.new(File.join(File.expand_path(File.dirname(__FILE__)), '..', 'ojb-vnd.xml'))
     repository.parse
     repository.class_descriptors.should_not == nil
     repository.class_descriptors.any? {|cd| cd[:rb_klazz] == 'VendorHeader' }.should ==  true

@@ -1,6 +1,6 @@
 require 'sequel'
 
-module KFSequel::RepoDB
+module OJBequel::RepoDB
   DB = Sequel.sqlite  # memory database
 
   DB.create_table :tableaus do

@@ -1,4 +1,4 @@
-require_relative 'lib/kfsequel'
+require_relative 'lib/ojbequel'
 
 ORG_KUALI_OJB_PATH = '/java/projects/kfs/work/src/org/kuali/kfs/'
 ORG_KUALI_OJB_FILES = {
@@ -48,9 +48,9 @@ Factories = {}
 
 ORG_KUALI_OJB_FILES.each do |name, file|
   puts "Creating #{name} repository (#{file})..."
-  repository = KFSequel::Repository.new(File.join(File.expand_path(ORG_KUALI_OJB_PATH), file))
+  repository = OJBequel::Repository.new(File.join(File.expand_path(ORG_KUALI_OJB_PATH), file))
   repository.parse
-  Factories[name] = KFSequel::RBStringFactory.new(repository)
+  Factories[name] = OJBequel::RBStringFactory.new(repository)
   #puts repository.class_descriptors.map {|cd| cd.rb_klazz}.join(", ")
   repository.class_descriptors.each do |cd|
     begin

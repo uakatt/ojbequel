@@ -1,5 +1,5 @@
-class KFSequel::Repository
-  include ::KFSequel::RepoDB
+class OJBequel::Repository
+  include ::OJBequel::RepoDB
   def initialize(file)
     @file = file
     @doc = Nokogiri::XML(File.open(@file))
