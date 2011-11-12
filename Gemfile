@@ -1,0 +1,5 @@
+gem 'sequel'
+gem 'highline'
+gem 'nokogiri'
+gem 'active_support'
+gem 'log4r'
