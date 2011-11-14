@@ -1,7 +1,11 @@
 require 'sequel'
 
+# A namespace for all of the in-memory SQLite database tables that will store all of the OJB entries.
+#
+# {DB} is the database itself. Each class within {OJBequel::RepoDB} will use {DB} as its backing store.
 module OJBequel::RepoDB
-  DB = Sequel.sqlite  # memory database
+  # the SQLite in-memory database
+  DB = Sequel.sqlite
 
   DB.create_table :tableaus do
     primary_key :id
@@ -12,6 +16,11 @@ module OJBequel::RepoDB
     String :ojb_entry
   end
 
+  # A {http://sequel.rubyforge.org/rdoc/classes/Sequel/Model.html Sequel::Model} class representing an OJB-mapped table. I use "Tableau" because I don't want to risk "Table" being a keyword somewhere.
+  #
+  # * Tableau has a *one_to_many* relationship with {OJBequel::RepoDB::Field}.
+  # * Tableau has a *one_to_many* relationship with {OJBequel::RepoDB::Reference}.
+  # * Tableau has a *one_to_many* relationship with {OJBequel::RepoDB::Collection}.
   class Tableau < Sequel::Model
     one_to_many :fields
     one_to_many :references
@@ -32,6 +41,9 @@ module OJBequel::RepoDB
     Integer :tableau_id
   end
 
+  # A {http://sequel.rubyforge.org/rdoc/classes/Sequel/Model.html Sequel::Model} class representing an OJB-mapped field descriptor for a class.
+  #
+  # * Field has a *many_to_one* relationship with {Tableau}.
   class Field < Sequel::Model
     many_to_one :table
 
@@ -51,6 +63,10 @@ module OJBequel::RepoDB
     Integer :tableau_id
   end
 
+  # A {http://sequel.rubyforge.org/rdoc/classes/Sequel/Model.html Sequel::Model} class representing an OJB-mapped reference descriptor for a class.
+  #
+  # * Reference has a *many_to_one* relationship with {Tableau}.
+  # * Reference has a *one_to_many* relationship with {Foreignkey}.
   class Reference < Sequel::Model
     many_to_one :table
     one_to_many :foreignkeys
@@ -65,6 +81,9 @@ module OJBequel::RepoDB
     Integer :reference_id
   end
 
+  # A {http://sequel.rubyforge.org/rdoc/classes/Sequel/Model.html Sequel::Model} class representing an OJB-mapped foreign key for a reference.
+  #
+  # * Foreignkey has a *many_to_one* relationship with {Reference}.
   class Foreignkey < Sequel::Model
     many_to_one :reference
 
@@ -85,6 +104,10 @@ module OJBequel::RepoDB
     Integer :tableau_id
   end
 
+  # A {http://sequel.rubyforge.org/rdoc/classes/Sequel/Model.html Sequel::Model} class representing an OJB-mapped collection descriptor for a class.
+  #
+  # * Collection has a *many_to_one* relationship with {Tableau}.
+  # * Collection has a *one_to_many* relationship with {InverseForeignkey}.
   class Collection < Sequel::Model
     many_to_one :table
     one_to_many :inverse_foreignkeys
@@ -99,6 +122,9 @@ module OJBequel::RepoDB
     Integer :collection_id
   end
 
+  # A {http://sequel.rubyforge.org/rdoc/classes/Sequel/Model.html Sequel::Model} class representing an OJB-mapped inverse foreign key for a collection.
+  #
+  # * InverseForeignkey has a *many_to_one* relationship with {Collection}.
   class InverseForeignkey < Sequel::Model
     many_to_one :collection
 
@@ -113,6 +139,9 @@ module OJBequel::RepoDB
     Integer :collection_id
   end
 
+  # A {http://sequel.rubyforge.org/rdoc/classes/Sequel/Model.html Sequel::Model} class representing an OJB-mapped 'orderby' for a collection.
+  #
+  # * Orderby has a *many_to_one* relationship with {Collection}.
   class Orderby < Sequel::Model
     many_to_one :collection
   end

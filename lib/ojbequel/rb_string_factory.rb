@@ -1,4 +1,7 @@
 class OJBequel::RBStringFactory
+  # Create a new RBStringFactory for one or more OJB repository files.
+  #
+  # @param [OJBequel::Repository] repositories one or more repositories to use when building Strings
   def initialize(*repositories)
     @repositories = repositories
   end
@@ -6,16 +9,25 @@ class OJBequel::RBStringFactory
   def build_all
     strings = []
 
-    repository.class_descriptors.each do |class_descriptor|
-      strings << build(class_descriptor.rb_klazz)
+    @repositories.each do |repository|
+        repository.class_descriptors.each do |class_descriptor|
+        strings << build(class_descriptor.rb_klazz)
+      end
     end
 
     strings
   end
 
+  # Build a String for `klazz_name`. This String is Ruby code that is meant to be written out to a file, or loaded into memory via `eval`. The String will contain 4 parts:
+  #
+  # * Two lines that require the connection file from the present working directory
+  # * Two constant hashes that represent the identifier input and output mappings between Java classes/attributes and DB tables/columns
+  # * Two new string methods that use the above hashes to convert a String back and forth
+  # * A Ruby class that inherits Sequel::Model, for a given Java class mapped in the OJB repository file
+  #
+  # @param [String] klazz_name the Java class name that is mapped in the OBJ repository file
   def build(klazz_name)
     klazz_underscore  = klazz_name.underscore
-    klazz_underupcase = klazz_name.underscore.upcase
     klazzes = @repositories.map { |r| r.class_descriptors.filter(:rb_klazz => klazz_name).first }.compact
     raise StandardError if klazzes.empty?
     klazz = klazzes[-1]  # keep the last one
@@ -24,24 +36,15 @@ class OJBequel::RBStringFactory
       raise ArgumentError  # Fix this
     end
     string = %{
-$LOAD_PATH << File.expand_path(File.dirname(__FILE__))
+$LOAD_PATH << Dir.pwd unless $LOAD_PATH.include? Dir.pwd
 require 'connection'
 
 }
 
     string = add_mapping_constants(klazz, klazz_name, string)
+    string += string_methods(klazz_name)
 
     string << %{
-class String
-  def #{klazz_underscore}_db_in
-    #{klazz_underupcase}_DB_IN.fetch(self, self)
-  end
-
-  def #{klazz_underscore}_db_out
-    #{klazz_underupcase}_DB_OUT.fetch(self.upcase, self)
-  end
-end
-
 #{table}__#{klazz_name} = DB[:#{table}]
 #{table}__#{klazz_name}.identifier_input_method  = :#{klazz_underscore}_db_in
 #{table}__#{klazz_name}.identifier_output_method = :#{klazz_underscore}_db_out
@@ -57,23 +60,24 @@ end
 
     string << "end\n"
 
-    string << <<DEFN
-class #{klazz_name}
-  Definition = "#{string}"
-
-  def self.definition
-    OJBequel::Utils.less Definition
-  end
-end
-DEFN
+#    string << <<DEFN
+#class #{klazz_name}
+#  Definition = "#{string}"
+#
+#  def self.definition
+#    OJBequel::Utils.less Definition
+#  end
+#end
+#DEFN
 
     #string << add_definition(klazz_name, string)
     string
-  end
+  end  # END build   woah that's too long
 
-  # produces something like:
+  # Add any collection definitions to the class as a call to `one_to_many`.
+  # Produces something like:
   #
-  #     one_to_many :useTaxItems, :key => :itemIdentifier
+  #     one_to_many :useTaxItems, :class => XXXX, :key => :itemIdentifier
   def add_collections(klazz, string)
     klazz.collections.each do |c|
       string << "  one_to_many #{c.name.to_sym.inspect}, :class => #{c.rb_klazz.to_sym.inspect}, :key => #{c.inverse_foreignkeys.map {|ifk| ifk.field.to_sym}.inspect}\n"
@@ -105,6 +109,7 @@ DEFN
     string << "#{klazz_underupcase}_DB_OUT = #{klazz_underupcase}_DB_IN.invert\n"
   end
 
+  # Add the full text of the OJB entry to the class itself, so that it can be accessble from, for example, irb.
   def add_ojb_entry(klazz, string)
     string_open_thing = "<<OHJAYBEE"
     string_close_thing = "OHJAYBEE"
@@ -135,5 +140,22 @@ DEFN
       string << "  many_to_one #{r.name.to_sym.inspect}, :class => #{r.rb_klazz.to_sym.inspect}, :key => #{r.foreignkeys.map {|fk| fk.field.to_sym}.inspect}\n"
     end
     string << (klazz.references.empty? ? '' : "\n")
+  end
+
+  def string_methods(klazz_name)
+    klazz_underscore  = klazz_name.underscore
+    klazz_underupcase = klazz_name.underscore.upcase
+    return <<STRING
+
+class ::String
+  def #{klazz_underscore}_db_in
+    #{klazz_underupcase}_DB_IN.fetch(self, self)
+  end
+
+  def #{klazz_underscore}_db_out
+    #{klazz_underupcase}_DB_OUT.fetch(self.upcase, self)
+  end
+end
+STRING
   end
 end
