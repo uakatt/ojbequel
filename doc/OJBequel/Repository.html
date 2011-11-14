@@ -1,0 +1,1547 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: OJBequel::Repository
+  
+    &mdash; Documentation by YARD 0.7.3
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (R)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../OJBequel.html" title="OJBequel (module)">OJBequel</a></span></span>
+     &raquo; 
+    <span class="title">Repository</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: OJBequel::Repository
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">OJBequel::Repository</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="RepoDB.html" title="OJBequel::RepoDB (module)">RepoDB</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/ojbequel/repository.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>The OJBequel::Repository class can parse an OJB repository file for the class descriptors and their child nodes, inserting everything into an in-memory SQLite database</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<h3>Author:</h3>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>Sam Rawlins</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+  <h2>Constant Summary</h2>
+  
+
+
+  
+  
+  
+  
+  <h3 class="inherited">Constants included from <span class='object_link'><a href="RepoDB.html" title="OJBequel::RepoDB (module)">RepoDB</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="RepoDB.html#DB-constant" title="OJBequel::RepoDB::DB (constant)">DB</a></span></p>
+
+
+
+  
+  
+  
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#class_descriptors-instance_method" title="#class_descriptors (instance method)">- (Object) <strong>class_descriptors</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The Sequel dataset of class_descriptors for this repository file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#field_descriptors-instance_method" title="#field_descriptors (instance method)">- (Object) <strong>field_descriptors</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Repository) <strong>initialize</strong>(file) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Initialize a new <span class='object_link'><a href="" title="OJBequel::Repository (class)">Repository</a></span> file for one specific OJB repository file.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse-instance_method" title="#parse (instance method)">- (Object) <strong>parse</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Parse the OJB repository file which, for now, consists of just parsing the class descriptors.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_class_descriptor-instance_method" title="#parse_class_descriptor (instance method)">- (Object) <strong>parse_class_descriptor</strong>(cd) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Parse a <code>&lt;class-descriptor&gt;</code>, inserting a row into the Tableau table in the in-memory SQLite
+database, and call methods to parse the class's field descriptors, reference descriptors, and
+collection descriptors.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_class_descriptors-instance_method" title="#parse_class_descriptors (instance method)">- (Object) <strong>parse_class_descriptors</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterate over all of the <code>&lt;class-descriptor&gt;</code>'s in the OJB repository file, calling <code>parse_class_descriptor</code> on each.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_collection_descriptor-instance_method" title="#parse_collection_descriptor (instance method)">- (Object) <strong>parse_collection_descriptor</strong>(tableau, cod) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Parse a <code>&lt;collection-descriptor&gt;</code>, inserting a row into the Collection table in the in-memory
+SQLite database, and call <span class='object_link'><a href="#parse_inverse_foreignkeys-instance_method" title="OJBequel::Repository#parse_inverse_foreignkeys (method)">#parse_inverse_foreignkeys</a></span> to parse the class's inverse foreign keys.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_collection_descriptors-instance_method" title="#parse_collection_descriptors (instance method)">- (Object) <strong>parse_collection_descriptors</strong>(cd, tableau) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterate over all of the <code>&lt;collection-descriptor&gt;</code>'s under a given <code>&lt;class-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_collection_descriptor-instance_method" title="OJBequel::Repository#parse_collection_descriptor (method)">#parse_collection_descriptor</a></span> on each.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_field_descriptor-instance_method" title="#parse_field_descriptor (instance method)">- (Object) <strong>parse_field_descriptor</strong>(tableau, fd) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Parse a <code>&lt;field-descriptor&gt;</code>, inserting a row into the Field table in the in-memory SQLite database.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_field_descriptors-instance_method" title="#parse_field_descriptors (instance method)">- (Object) <strong>parse_field_descriptors</strong>(cd, tableau) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterate over all of the <code>&lt;field-descriptor&gt;</code>'s under a given <code>&lt;class-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_field_descriptor-instance_method" title="OJBequel::Repository#parse_field_descriptor (method)">#parse_field_descriptor</a></span> on each.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_foreignkey-instance_method" title="#parse_foreignkey (instance method)">- (Object) <strong>parse_foreignkey</strong>(reference, fk) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Parse a <code>&lt;foreignkey&gt;</code>, inserting a row into the Foreignkey table in the in-memory SQLite database.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_foreignkeys-instance_method" title="#parse_foreignkeys (instance method)">- (Object) <strong>parse_foreignkeys</strong>(rd, reference) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterate over all of the <code>&lt;foreignkey&gt;</code>'s under a given <code>&lt;reference-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_foreignkey-instance_method" title="OJBequel::Repository#parse_foreignkey (method)">#parse_foreignkey</a></span> on each.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_inverse_foreignkey-instance_method" title="#parse_inverse_foreignkey (instance method)">- (Object) <strong>parse_inverse_foreignkey</strong>(collection, ifk) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_inverse_foreignkeys-instance_method" title="#parse_inverse_foreignkeys (instance method)">- (Object) <strong>parse_inverse_foreignkeys</strong>(cod, collection) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterate over all of the <code>&lt;inverse-foreignkey&gt;</code>'s under a given <code>&lt;collection-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_inverse_foreignkey-instance_method" title="OJBequel::Repository#parse_inverse_foreignkey (method)">#parse_inverse_foreignkey</a></span> on each.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_reference_descriptor-instance_method" title="#parse_reference_descriptor (instance method)">- (Object) <strong>parse_reference_descriptor</strong>(tableau, rd) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#parse_reference_descriptors-instance_method" title="#parse_reference_descriptors (instance method)">- (Object) <strong>parse_reference_descriptors</strong>(cd, tableau) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterate over all of the <code>&lt;reference-descriptor&gt;</code>'s under a given <code>&lt;class-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_reference_descriptor-instance_method" title="OJBequel::Repository#parse_reference_descriptor (method)">#parse_reference_descriptor</a></span> on each.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="OJBequel::Repository (class)">Repository</a></span></tt>) <strong>initialize</strong>(file) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Initialize a new <span class='object_link'><a href="" title="OJBequel::Repository (class)">OJBequel::Repository</a></span> file for one specific OJB repository file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>file</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the path to an OJB repository file</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+10
+11
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 10</span>
+
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id file'>file</span><span class='rparen'>)</span>
+  <span class='ivar'>@file</span> <span class='op'>=</span> <span class='id file'>file</span>
+  <span class='ivar'>@doc</span> <span class='op'>=</span> <span class='const'>Nokogiri</span><span class='op'>::</span><span class='const'>XML</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id open'>open</span><span class='lparen'>(</span><span class='ivar'>@file</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="class_descriptors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>class_descriptors</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>The Sequel dataset of class_descriptors for this repository file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>the Sequel dataset of class_descriptors for this repository file</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id class_descriptors'>class_descriptors</span>
+  <span class='const'>Tableau</span><span class='period'>.</span><span class='id filter'>filter</span><span class='lparen'>(</span><span class='symbol'>:ojb_repository</span> <span class='op'>=&gt;</span> <span class='ivar'>@file</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="field_descriptors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>field_descriptors</strong> 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 20</span>
+
+<span class='kw'>def</span> <span class='id field_descriptors'>field_descriptors</span>
+  <span class='const'>Field</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Parse the OJB repository file which, for now, consists of just parsing the class descriptors.
+This results in the in-memory SQLite database being fully populated.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id parse'>parse</span>
+  <span class='id parse_class_descriptors'>parse_class_descriptors</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_class_descriptor-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_class_descriptor</strong>(cd) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Parse a <code>&lt;class-descriptor&gt;</code>, inserting a row into the Tableau table in the in-memory SQLite
+database, and call methods to parse the class's field descriptors, reference descriptors, and
+collection descriptors</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cd</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the class-descriptor node</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id parse_class_descriptor'>parse_class_descriptor</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='rparen'>)</span>
+  <span class='id klazz'>klazz</span> <span class='op'>=</span> <span class='id cd'>cd</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>class</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id rb_klazz'>rb_klazz</span> <span class='op'>=</span> <span class='id klazz'>klazz</span><span class='period'>.</span><span class='id sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.+\.</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id table'>table</span> <span class='op'>=</span> <span class='id cd'>cd</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>table</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id ojb_entry'>ojb_entry</span> <span class='op'>=</span> <span class='id cd'>cd</span><span class='period'>.</span><span class='id to_xml'>to_xml</span>
+  <span class='id tableau'>tableau</span> <span class='op'>=</span> <span class='const'>Tableau</span><span class='period'>.</span><span class='id create'>create</span><span class='lparen'>(</span><span class='symbol'>:klazz</span> <span class='op'>=&gt;</span> <span class='id klazz'>klazz</span><span class='comma'>,</span> <span class='symbol'>:rb_klazz</span> <span class='op'>=&gt;</span> <span class='id rb_klazz'>rb_klazz</span><span class='comma'>,</span> <span class='symbol'>:table</span> <span class='op'>=&gt;</span> <span class='id table'>table</span><span class='comma'>,</span> <span class='symbol'>:ojb_repository</span> <span class='op'>=&gt;</span> <span class='ivar'>@file</span><span class='comma'>,</span> <span class='symbol'>:ojb_entry</span> <span class='op'>=&gt;</span> <span class='id ojb_entry'>ojb_entry</span><span class='rparen'>)</span>
+  <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tableau has new id: %2s. </span><span class='embexpr_beg'>#{</span><span class='id tableau'>tableau</span><span class='lbracket'>[</span><span class='symbol'>:rb_klazz</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='op'>%</span> <span class='lbracket'>[</span><span class='id tableau'>tableau</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='gvar'>$debug</span>
+  <span class='id parse_field_descriptors'>parse_field_descriptors</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='comma'>,</span> <span class='id tableau'>tableau</span><span class='rparen'>)</span>
+  <span class='id parse_reference_descriptors'>parse_reference_descriptors</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='comma'>,</span> <span class='id tableau'>tableau</span><span class='rparen'>)</span>
+  <span class='id parse_collection_descriptors'>parse_collection_descriptors</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='comma'>,</span> <span class='id tableau'>tableau</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_class_descriptors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_class_descriptors</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Iterate over all of the <code>&lt;class-descriptor&gt;</code>'s in the OJB repository file, calling <code>parse_class_descriptor</code> on each</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='id parse_class_descriptors'>parse_class_descriptors</span>
+  <span class='ivar'>@doc</span><span class='period'>.</span><span class='id xpath'>xpath</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>//class-descriptor</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id cd'>cd</span><span class='op'>|</span>
+    <span class='id parse_class_descriptor'>parse_class_descriptor</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_collection_descriptor-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_collection_descriptor</strong>(tableau, cod) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Parse a <code>&lt;collection-descriptor&gt;</code>, inserting a row into the Collection table in the in-memory
+SQLite database, and call <span class='object_link'><a href="#parse_inverse_foreignkeys-instance_method" title="OJBequel::Repository#parse_inverse_foreignkeys (method)">#parse_inverse_foreignkeys</a></span> to parse the class's inverse foreign keys</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>tableau</span>
+      
+      
+        <span class='type'>(<tt>Sequel::Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the row in the in-memory <code>Tableau</code> table that this collection descriptor belongs to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>cod</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the collection-descriptor node</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 59</span>
+
+<span class='kw'>def</span> <span class='id parse_collection_descriptor'>parse_collection_descriptor</span><span class='lparen'>(</span><span class='id tableau'>tableau</span><span class='comma'>,</span> <span class='id cod'>cod</span><span class='rparen'>)</span>
+  <span class='id klazz'>klazz</span> <span class='op'>=</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:element-class-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id rb_klazz'>rb_klazz</span> <span class='op'>=</span> <span class='id klazz'>klazz</span><span class='period'>.</span><span class='id sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.+\.</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id collection'>collection</span> <span class='op'>=</span> <span class='const'>Collection</span><span class='period'>.</span><span class='id create'>create</span><span class='lparen'>(</span><span class='symbol'>:name</span> <span class='op'>=&gt;</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                 <span class='symbol'>:element_class</span>    <span class='op'>=&gt;</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:element-class-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                 <span class='symbol'>:rb_klazz</span>         <span class='op'>=&gt;</span> <span class='id rb_klazz'>rb_klazz</span><span class='comma'>,</span>
+                                 <span class='symbol'>:collection_class</span> <span class='op'>=&gt;</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:collection-class</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                 <span class='symbol'>:auto_retrieve</span>    <span class='op'>=&gt;</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:auto-retrieve</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                 <span class='symbol'>:auto_update</span>      <span class='op'>=&gt;</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:auto-update</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                 <span class='symbol'>:auto_delete</span>      <span class='op'>=&gt;</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:auto-delete</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                 <span class='symbol'>:proxy</span>            <span class='op'>=&gt;</span> <span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:proxy</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                                 <span class='symbol'>:tableau_id</span>       <span class='op'>=&gt;</span> <span class='id tableau'>tableau</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id remaining'>remaining</span> <span class='op'>=</span> <span class='id cod'>cod</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='period'>.</span><span class='id dup'>dup</span><span class='period'>.</span><span class='id delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='const'>Collection</span><span class='period'>.</span><span class='id fields'>fields</span><span class='period'>.</span><span class='id include?'>include?</span> <span class='id k'>k</span><span class='period'>.</span><span class='id to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='id remaining'>remaining</span><span class='period'>.</span><span class='id each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New field for </span><span class='embexpr_beg'>#{</span><span class='id cod'>cod</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id k'>k</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> = </span><span class='embexpr_beg'>#{</span><span class='id v'>v</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='id parse_inverse_foreignkeys'>parse_inverse_foreignkeys</span><span class='lparen'>(</span><span class='id cod'>cod</span><span class='comma'>,</span> <span class='id collection'>collection</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_collection_descriptors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_collection_descriptors</strong>(cd, tableau) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Iterate over all of the <code>&lt;collection-descriptor&gt;</code>'s under a given <code>&lt;class-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_collection_descriptor-instance_method" title="OJBequel::Repository#parse_collection_descriptor (method)">#parse_collection_descriptor</a></span> on each</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cd</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the class-descriptor node that this collection descriptor belongs to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tableau</span>
+      
+      
+        <span class='type'>(<tt>Sequel::Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the row in the in-memory <code>Tableau</code> table</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 80</span>
+
+<span class='kw'>def</span> <span class='id parse_collection_descriptors'>parse_collection_descriptors</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='comma'>,</span> <span class='id tableau'>tableau</span><span class='rparen'>)</span>
+  <span class='id cd'>cd</span><span class='period'>.</span><span class='id xpath'>xpath</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.//collection-descriptor</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id cod'>cod</span><span class='op'>|</span>
+    <span class='id parse_collection_descriptor'>parse_collection_descriptor</span><span class='lparen'>(</span><span class='id tableau'>tableau</span><span class='comma'>,</span> <span class='id cod'>cod</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_field_descriptor-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_field_descriptor</strong>(tableau, fd) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Parse a <code>&lt;field-descriptor&gt;</code>, inserting a row into the Field table in the in-memory SQLite database</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>tableau</span>
+      
+      
+        <span class='type'>(<tt>Sequel::Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the row in the in-memory <code>Tableau</code> table that this collection descriptor belongs to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>field</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the field-descriptor node</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 90</span>
+
+<span class='kw'>def</span> <span class='id parse_field_descriptor'>parse_field_descriptor</span><span class='lparen'>(</span><span class='id tableau'>tableau</span><span class='comma'>,</span> <span class='id fd'>fd</span><span class='rparen'>)</span>
+  <span class='const'>Field</span><span class='period'>.</span><span class='id insert'>insert</span><span class='lparen'>(</span><span class='symbol'>:name</span>          <span class='op'>=&gt;</span>  <span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span>
+               <span class='symbol'>:column</span>        <span class='op'>=&gt;</span>  <span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:column</span><span class='rbracket'>]</span><span class='comma'>,</span>
+               <span class='symbol'>:jdbc_type</span>     <span class='op'>=&gt;</span>  <span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:jdbc-type</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+               <span class='symbol'>:primarykey</span>    <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:primarykey</span><span class='rbracket'>]</span>      <span class='op'>||</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='comma'>,</span>
+               <span class='symbol'>:index</span>         <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:index</span><span class='rbracket'>]</span>           <span class='op'>||</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='comma'>,</span>
+               <span class='symbol'>:autoincrement</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:autoincrement</span><span class='rbracket'>]</span>   <span class='op'>||</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='comma'>,</span>
+               <span class='symbol'>:sequence_name</span> <span class='op'>=&gt;</span>  <span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:sequence-name</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+               <span class='symbol'>:locking</span>       <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:locking</span><span class='rbracket'>]</span>         <span class='op'>||</span> <span class='kw'>false</span><span class='rparen'>)</span><span class='comma'>,</span>
+               <span class='symbol'>:conversion</span>    <span class='op'>=&gt;</span>  <span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:conversion</span><span class='rbracket'>]</span><span class='comma'>,</span>
+               <span class='symbol'>:tableau_id</span>    <span class='op'>=&gt;</span>  <span class='id tableau'>tableau</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='id remaining'>remaining</span> <span class='op'>=</span> <span class='id fd'>fd</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='period'>.</span><span class='id dup'>dup</span><span class='period'>.</span><span class='id delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='const'>Field</span><span class='period'>.</span><span class='id fields'>fields</span><span class='period'>.</span><span class='id include?'>include?</span> <span class='id k'>k</span><span class='period'>.</span><span class='id to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='comment'>#unless remaining.empty?
+</span>    <span class='id remaining'>remaining</span><span class='period'>.</span><span class='id each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New field for </span><span class='embexpr_beg'>#{</span><span class='id fd'>fd</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id k'>k</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> = </span><span class='embexpr_beg'>#{</span><span class='id v'>v</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='comment'>#end
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_field_descriptors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_field_descriptors</strong>(cd, tableau) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Iterate over all of the <code>&lt;field-descriptor&gt;</code>'s under a given <code>&lt;class-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_field_descriptor-instance_method" title="OJBequel::Repository#parse_field_descriptor (method)">#parse_field_descriptor</a></span> on each</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cd</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the class-descriptor node that this field descriptor belongs to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tableau</span>
+      
+      
+        <span class='type'>(<tt>Sequel::Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the row in the in-memory <code>Tableau</code> table</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+112
+113
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 112</span>
+
+<span class='kw'>def</span> <span class='id parse_field_descriptors'>parse_field_descriptors</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='comma'>,</span> <span class='id tableau'>tableau</span><span class='rparen'>)</span>
+  <span class='id cd'>cd</span><span class='period'>.</span><span class='id xpath'>xpath</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.//field-descriptor</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id fd'>fd</span><span class='op'>|</span>
+    <span class='id parse_field_descriptor'>parse_field_descriptor</span><span class='lparen'>(</span><span class='id tableau'>tableau</span><span class='comma'>,</span> <span class='id fd'>fd</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_foreignkey-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_foreignkey</strong>(reference, fk) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Parse a <code>&lt;foreignkey&gt;</code>, inserting a row into the Foreignkey table in the in-memory SQLite database</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>reference</span>
+      
+      
+        <span class='type'>(<tt>Sequel::Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the row in the in-memory <code>Reference</code> table that this foreign key belongs to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>fk</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the foreign key node</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+122
+123
+124
+125
+126
+127
+128</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 122</span>
+
+<span class='kw'>def</span> <span class='id parse_foreignkey'>parse_foreignkey</span><span class='lparen'>(</span><span class='id reference'>reference</span><span class='comma'>,</span> <span class='id fk'>fk</span><span class='rparen'>)</span>
+  <span class='const'>Foreignkey</span><span class='period'>.</span><span class='id insert'>insert</span><span class='lparen'>(</span><span class='symbol'>:field</span>        <span class='op'>=&gt;</span> <span class='id fk'>fk</span><span class='lbracket'>[</span><span class='symbol'>:field-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                    <span class='symbol'>:reference_id</span> <span class='op'>=&gt;</span> <span class='id reference'>reference</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='id remaining'>remaining</span> <span class='op'>=</span> <span class='id fk'>fk</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='period'>.</span><span class='id dup'>dup</span><span class='period'>.</span><span class='id delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='const'>Foreignkey</span><span class='period'>.</span><span class='id fields'>fields</span><span class='period'>.</span><span class='id include?'>include?</span> <span class='id k'>k</span><span class='period'>.</span><span class='id to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='id remaining'>remaining</span><span class='period'>.</span><span class='id each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New field for </span><span class='embexpr_beg'>#{</span><span class='id fk'>fk</span><span class='lbracket'>[</span><span class='symbol'>:field-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id k'>k</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> = </span><span class='embexpr_beg'>#{</span><span class='id v'>v</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_foreignkeys-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_foreignkeys</strong>(rd, reference) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Iterate over all of the <code>&lt;foreignkey&gt;</code>'s under a given <code>&lt;reference-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_foreignkey-instance_method" title="OJBequel::Repository#parse_foreignkey (method)">#parse_foreignkey</a></span> on each</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>rd</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the reference-descriptor node that this foreign key belongs to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>reference</span>
+      
+      
+        <span class='type'>(<tt>Sequel::Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the row in the in-memory <code>Reference</code> table</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 134</span>
+
+<span class='kw'>def</span> <span class='id parse_foreignkeys'>parse_foreignkeys</span><span class='lparen'>(</span><span class='id rd'>rd</span><span class='comma'>,</span> <span class='id reference'>reference</span><span class='rparen'>)</span>
+  <span class='id rd'>rd</span><span class='period'>.</span><span class='id xpath'>xpath</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.//foreignkey</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id fk'>fk</span><span class='op'>|</span>
+    <span class='id parse_foreignkey'>parse_foreignkey</span><span class='lparen'>(</span><span class='id reference'>reference</span><span class='comma'>,</span> <span class='id fk'>fk</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_inverse_foreignkey-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_inverse_foreignkey</strong>(collection, ifk) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id parse_inverse_foreignkey'>parse_inverse_foreignkey</span><span class='lparen'>(</span><span class='id collection'>collection</span><span class='comma'>,</span> <span class='id ifk'>ifk</span><span class='rparen'>)</span>
+  <span class='const'>InverseForeignkey</span><span class='period'>.</span><span class='id insert'>insert</span><span class='lparen'>(</span><span class='symbol'>:field</span>         <span class='op'>=&gt;</span> <span class='id ifk'>ifk</span><span class='lbracket'>[</span><span class='symbol'>:field-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                           <span class='symbol'>:collection_id</span> <span class='op'>=&gt;</span> <span class='id collection'>collection</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+
+  <span class='id remaining'>remaining</span> <span class='op'>=</span> <span class='id ifk'>ifk</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='period'>.</span><span class='id dup'>dup</span><span class='period'>.</span><span class='id delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='const'>InverseForeignkey</span><span class='period'>.</span><span class='id fields'>fields</span><span class='period'>.</span><span class='id include?'>include?</span> <span class='id k'>k</span><span class='period'>.</span><span class='id to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='id remaining'>remaining</span><span class='period'>.</span><span class='id each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New field for </span><span class='embexpr_beg'>#{</span><span class='id ifk'>ifk</span><span class='lbracket'>[</span><span class='symbol'>:field-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id k'>k</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> = </span><span class='embexpr_beg'>#{</span><span class='id v'>v</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_inverse_foreignkeys-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_inverse_foreignkeys</strong>(cod, collection) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Iterate over all of the <code>&lt;inverse-foreignkey&gt;</code>'s under a given <code>&lt;collection-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_inverse_foreignkey-instance_method" title="OJBequel::Repository#parse_inverse_foreignkey (method)">#parse_inverse_foreignkey</a></span> on each</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151
+152
+153</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 149</span>
+
+<span class='kw'>def</span> <span class='id parse_inverse_foreignkeys'>parse_inverse_foreignkeys</span><span class='lparen'>(</span><span class='id cod'>cod</span><span class='comma'>,</span> <span class='id collection'>collection</span><span class='rparen'>)</span>
+  <span class='id cod'>cod</span><span class='period'>.</span><span class='id xpath'>xpath</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.//inverse-foreignkey</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id ifk'>ifk</span><span class='op'>|</span>
+    <span class='id parse_inverse_foreignkey'>parse_inverse_foreignkey</span><span class='lparen'>(</span><span class='id collection'>collection</span><span class='comma'>,</span> <span class='id ifk'>ifk</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_reference_descriptor-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_reference_descriptor</strong>(tableau, rd) 
+  
+
+  
+</p><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 155</span>
+
+<span class='kw'>def</span> <span class='id parse_reference_descriptor'>parse_reference_descriptor</span><span class='lparen'>(</span><span class='id tableau'>tableau</span><span class='comma'>,</span> <span class='id rd'>rd</span><span class='rparen'>)</span>
+  <span class='id klazz'>klazz</span> <span class='op'>=</span> <span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:class-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+  <span class='id rb_klazz'>rb_klazz</span> <span class='op'>=</span> <span class='id klazz'>klazz</span><span class='period'>.</span><span class='id sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^.+\.</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='id reference'>reference</span> <span class='op'>=</span> <span class='const'>Reference</span><span class='period'>.</span><span class='id create'>create</span><span class='lparen'>(</span><span class='symbol'>:name</span>          <span class='op'>=&gt;</span> <span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                               <span class='symbol'>:klazz</span>         <span class='op'>=&gt;</span> <span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:class-ref</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                               <span class='symbol'>:rb_klazz</span>      <span class='op'>=&gt;</span> <span class='id rb_klazz'>rb_klazz</span><span class='comma'>,</span>
+                               <span class='symbol'>:auto_retrieve</span> <span class='op'>=&gt;</span> <span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:auto-retrieve</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                               <span class='symbol'>:auto_update</span>   <span class='op'>=&gt;</span> <span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:auto-update</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                               <span class='symbol'>:auto_delete</span>   <span class='op'>=&gt;</span> <span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:auto-delete</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                               <span class='symbol'>:proxy</span>         <span class='op'>=&gt;</span> <span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:proxy</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+                               <span class='symbol'>:tableau_id</span>    <span class='op'>=&gt;</span> <span class='id tableau'>tableau</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id remaining'>remaining</span> <span class='op'>=</span> <span class='id rd'>rd</span><span class='period'>.</span><span class='id attributes'>attributes</span><span class='period'>.</span><span class='id dup'>dup</span><span class='period'>.</span><span class='id delete_if'>delete_if</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='const'>Reference</span><span class='period'>.</span><span class='id fields'>fields</span><span class='period'>.</span><span class='id include?'>include?</span> <span class='id k'>k</span><span class='period'>.</span><span class='id to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='id remaining'>remaining</span><span class='period'>.</span><span class='id each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id k'>k</span><span class='comma'>,</span><span class='id v'>v</span><span class='op'>|</span> <span class='id puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>New field for </span><span class='embexpr_beg'>#{</span><span class='id rd'>rd</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id k'>k</span><span class='period'>.</span><span class='id inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'> = </span><span class='embexpr_beg'>#{</span><span class='id v'>v</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='id parse_foreignkeys'>parse_foreignkeys</span><span class='lparen'>(</span><span class='id rd'>rd</span><span class='comma'>,</span> <span class='id reference'>reference</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="parse_reference_descriptors-instance_method">
+  
+    - (<tt>Object</tt>) <strong>parse_reference_descriptors</strong>(cd, tableau) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Iterate over all of the <code>&lt;reference-descriptor&gt;</code>'s under a given <code>&lt;class-descriptor&gt;</code>, calling <span class='object_link'><a href="#parse_reference_descriptor-instance_method" title="OJBequel::Repository#parse_reference_descriptor (method)">#parse_reference_descriptor</a></span> on each</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cd</span>
+      
+      
+        <span class='type'>(<tt>Nokogiri::XML::Node</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the class-descriptor node that this reference descriptor belongs to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>tableau</span>
+      
+      
+        <span class='type'>(<tt>Sequel::Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the row in the in-memory <code>Tableau</code> table</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+175
+176
+177
+178
+179</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repository.rb', line 175</span>
+
+<span class='kw'>def</span> <span class='id parse_reference_descriptors'>parse_reference_descriptors</span><span class='lparen'>(</span><span class='id cd'>cd</span><span class='comma'>,</span> <span class='id tableau'>tableau</span><span class='rparen'>)</span>
+  <span class='id cd'>cd</span><span class='period'>.</span><span class='id xpath'>xpath</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.//reference-descriptor</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id rd'>rd</span><span class='op'>|</span>
+    <span class='id parse_reference_descriptor'>parse_reference_descriptor</span><span class='lparen'>(</span><span class='id tableau'>tableau</span><span class='comma'>,</span> <span class='id rd'>rd</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Mon Nov 14 08:24:00 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.3 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>
