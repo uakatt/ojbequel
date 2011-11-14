@@ -1,0 +1,154 @@
+<descriptor-repository version="1.0">    
+    <class-descriptor
+       class="com.rsmart.kuali.kfs.prje.bo.PRJEType"
+       table="PRJE_TYPE_T">
+       
+        <field-descriptor 
+           name="typeId" 
+           column="PRJE_TYPE_ID" 
+           jdbc-type="INTEGER" 
+           primarykey="true"/>
+    
+        <field-descriptor
+           name="setId"
+           column="PRJE_SET_ID" 
+           jdbc-type="INTEGER" />
+
+        <field-descriptor
+           name="entryName"
+           column="PRORATE_JE_NM" 
+           jdbc-type="VARCHAR" />
+
+        <field-descriptor
+           name="prorateOptions"
+           column="PRORATE_JE_OPTION" 
+           jdbc-type="VARCHAR" />
+    
+        <field-descriptor
+           name="active"
+           column="ACTV_CD"
+           jdbc-type="VARCHAR"
+           conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
+                      
+        <!-- Common Fields -->
+        
+        <field-descriptor
+           name="objectId"
+           column="OBJ_ID"
+           jdbc-type="VARCHAR" />
+           
+        <field-descriptor
+           name="lastUpdate"
+           column="LST_UPDT_TS"
+           jdbc-type="TIMESTAMP"/>
+           
+        <field-descriptor
+           name="versionNumber"
+           locking="true"
+           column="VER_NBR"
+           jdbc-type="BIGINT" />
+                   
+        <!-- Relationships -->
+        
+        <reference-descriptor
+           name="set" 
+           class-ref="com.rsmart.kuali.kfs.prje.bo.PRJESet" 
+           auto-retrieve="true" 
+           auto-update="none" 
+           auto-delete="none">
+            <foreignkey field-ref="setId" />
+        </reference-descriptor> 
+
+        <collection-descriptor 
+           name="baseAccounts" 
+           element-class-ref="com.rsmart.kuali.kfs.prje.bo.PRJEBaseAccount" 
+           collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" 
+           auto-retrieve="true" 
+           auto-update="object" 
+           auto-delete="true">
+            <inverse-foreignkey field-ref="typeId" />
+        </collection-descriptor>
+        
+        <collection-descriptor 
+           name="baseObjects" 
+           element-class-ref="com.rsmart.kuali.kfs.prje.bo.PRJEBaseObject" 
+           collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" 
+           auto-retrieve="true" 
+           auto-update="object" 
+           auto-delete="true">
+            <inverse-foreignkey field-ref="typeId" />
+        </collection-descriptor>
+        
+        <collection-descriptor
+           name="accountLines" 
+           element-class-ref="com.rsmart.kuali.kfs.prje.bo.PRJEAccountLine" 
+           collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" 
+           auto-retrieve="true" 
+           auto-update="object" 
+           auto-delete="true">
+            <inverse-foreignkey field-ref="typeId" />
+        </collection-descriptor>    
+    </class-descriptor>
+    
+    <class-descriptor
+       class="com.rsmart.kuali.kfs.prje.bo.PRJESet"
+       table="PRJE_SET_T">
+           
+        <field-descriptor 
+           name="setId" 
+           column="PRJE_SET_ID" 
+           jdbc-type="INTEGER" 
+           primarykey="true" />
+                          
+        <field-descriptor
+           name="fiscalYear"
+           column="UNIV_FISCAL_YEAR" 
+           jdbc-type="INTEGER" />
+
+        <field-descriptor
+           name="setName"
+           column="PRJE_SET_NAME" 
+           jdbc-type="VARCHAR" />
+           
+        <field-descriptor
+           name="setDescription"
+           column="PRJE_SET_DESC" 
+           jdbc-type="VARCHAR" />
+           
+        <field-descriptor
+           name="active"
+           column="ACTV_CD"
+           jdbc-type="VARCHAR"
+           conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
+           
+        <!-- Common Fields -->
+        
+        <field-descriptor
+           name="objectId"
+           column="OBJ_ID"
+           jdbc-type="VARCHAR" />
+           
+        <field-descriptor
+           name="lastUpdate"
+           column="LST_UPDT_TS"
+           jdbc-type="TIMESTAMP"/>
+           
+        <field-descriptor
+           name="versionNumber"
+           locking="true"
+           column="VER_NBR"
+           jdbc-type="BIGINT" />
+           
+         <!-- Relationships -->
+ 
+        <collection-descriptor 
+           name="types" 
+           element-class-ref="com.rsmart.kuali.kfs.prje.bo.PRJEType" 
+           collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" 
+           auto-retrieve="true" 
+           auto-update="object" 
+           auto-delete="true">
+            <inverse-foreignkey field-ref="setId" />
+        </collection-descriptor>
+    </class-descriptor>
+</descriptor-repository>

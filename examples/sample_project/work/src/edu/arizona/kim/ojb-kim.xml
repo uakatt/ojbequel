@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<descriptor-repository version="1.0">
+	<jdbc-connection-descriptor jcd-alias="kimDataSource" default-connection="false" jdbc-level="3.0" eager-release="false" batch-mode="false"
+		useAutoCommit="0" ignoreAutoCommitExceptions="false">
+		<sequence-manager className="org.kuali.rice.core.ojb.ConfigurableSequenceManager">
+			<attribute attribute-name="property.prefix" attribute-value="datasource.ojb.sequenceManager" />
+		</sequence-manager>
+		<object-cache class="org.apache.ojb.broker.cache.ObjectCachePerBrokerImpl" />
+	</jdbc-connection-descriptor>
+
+  <!-- GroupDocument -->
+  <class-descriptor class="org.kuali.rice.kim.document.IdentityManagementGroupDocument" table="KRIM_GRP_DOCUMENT_T">
+	<field-descriptor name="documentNumber" column="FDOC_NBR" jdbc-type="VARCHAR" primarykey="true"  />
+    <field-descriptor name="groupId" column="grp_id" jdbc-type="VARCHAR" autoincrement="true" sequence-name="KRIM_GRP_ID_S" />
+    <field-descriptor name="groupTypeId" column="kim_typ_id" jdbc-type="VARCHAR"/>
+    <field-descriptor name="groupNamespace" column="grp_nmspc" jdbc-type="VARCHAR"  />
+    <field-descriptor name="groupName" column="grp_nm" jdbc-type="VARCHAR"  />
+    <field-descriptor name="active" column="ACTV_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion"  />
+    <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true"  />
+    <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" index="true"  />
+    <!-- START AZ: KFSI-2796 KITT-1990 need to persist whether this document is editing a group or not -->
+    <!-- Will be fixed by KFSMI-6336, remove this after it's resolved -->
+    <field-descriptor name="editing" column="EDIT_FLAG" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion"  />
+    <!-- END AZ -->
+   	<reference-descriptor name="documentHeader" class-ref="org.kuali.rice.kns.bo.DocumentHeader" auto-retrieve="true" auto-update="object" auto-delete="object">
+       	<foreignkey field-ref="documentNumber" />
+   	</reference-descriptor>
+    <collection-descriptor name="members" element-class-ref="org.kuali.rice.kim.bo.ui.GroupDocumentMember" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+	<collection-descriptor name="qualifiers" element-class-ref="org.kuali.rice.kim.bo.ui.GroupDocumentQualifier" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+  </class-descriptor>
+  
+  <class-descriptor class="org.kuali.rice.kim.bo.ui.GroupDocumentMember" table="KRIM_PND_GRP_MBR_T">
+    <field-descriptor name="groupMemberId" column="GRP_MBR_ID" jdbc-type="VARCHAR" primarykey="true"   autoincrement="true" sequence-name="KRIM_GRP_MBR_ID_S" />
+	<field-descriptor name="documentNumber" column="FDOC_NBR" jdbc-type="VARCHAR" primarykey="true" />
+    <field-descriptor name="groupId" column="GRP_ID" jdbc-type="VARCHAR" />
+    <field-descriptor name="memberId" column="MBR_ID" jdbc-type="VARCHAR" />
+    <field-descriptor name="memberTypeCode" column="MBR_TYP_CD" jdbc-type="VARCHAR" />
+    <field-descriptor name="memberName" column="MBR_NM" jdbc-type="VARCHAR" />
+    <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true" />
+    <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" index="true" />
+    <field-descriptor name="activeFromDate" column="ACTV_FRM_DT" jdbc-type="DATE" />
+    <field-descriptor name="activeToDate" column="ACTV_TO_DT" jdbc-type="DATE" />
+    <!-- START AZ: KFSI-2796 KITT-1990 need to persist whether the member was added a group or not -->
+    <!-- Will be fixed by KFSMI-6336, remove this after it's resolved -->
+    <field-descriptor name="edit" column="EDIT_FLAG" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion"  />
+    <!-- END AZ -->
+  </class-descriptor>
+
+  <!-- PersonDocument -->
+  <!-- START AZ:  KFSI-4627 - add override for the class descriptor to make document persistence work -->
+  <class-descriptor class="edu.arizona.kim.document.IdentityManagementPersonDocument" table="KRIM_PERSON_DOCUMENT_T">
+		<field-descriptor name="documentNumber" column="FDOC_NBR" jdbc-type="VARCHAR" primarykey="true"  />
+    <field-descriptor name="entityId" column="entity_id" jdbc-type="VARCHAR" autoincrement="true" sequence-name="KRIM_ENTITY_ID_S" />
+    <field-descriptor name="principalId" column="prncpl_id" jdbc-type="VARCHAR"  autoincrement="true" sequence-name="KRIM_PRNCPL_ID_S"/>
+    <field-descriptor name="principalName" column="prncpl_nm" jdbc-type="VARCHAR"  />
+    <field-descriptor name="taxId" column="tax_id" jdbc-type="VARCHAR"  />
+    <field-descriptor name="univId" column="univ_id" jdbc-type="VARCHAR"  />
+    <field-descriptor name="password" column="prncpl_pswd" jdbc-type="VARCHAR"  conversion="org.kuali.rice.kns.util.OjbKualiHashFieldConversion"/>
+    <field-descriptor name="active" column="ACTV_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion"  />
+    <field-descriptor name="versionNumber" column="VER_NBR" jdbc-type="BIGINT" locking="true"  />
+    <field-descriptor name="objectId" column="OBJ_ID" jdbc-type="VARCHAR" index="true"  />
+    <collection-descriptor name="affiliations" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentAffiliation" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+    <collection-descriptor name="names" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentName" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+    <collection-descriptor name="emails" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentEmail" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+    <collection-descriptor name="phones" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentPhone" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+    <collection-descriptor name="addrs" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentAddress" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+    	<reference-descriptor name="documentHeader" class-ref="org.kuali.rice.kns.bo.DocumentHeader" auto-retrieve="true" auto-update="object" auto-delete="object">
+        	<foreignkey field-ref="documentNumber" />
+    	</reference-descriptor>
+    	<reference-descriptor name="privacy" class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentPrivacy" auto-retrieve="true" auto-update="object" auto-delete="object">
+        	<foreignkey field-ref="documentNumber" />
+    	</reference-descriptor>
+    <collection-descriptor name="names" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentName" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+    <collection-descriptor name="roles" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentRole" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+    <collection-descriptor name="groups" element-class-ref="org.kuali.rice.kim.bo.ui.PersonDocumentGroup" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="true">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+	<collection-descriptor name="delegations" element-class-ref="org.kuali.rice.kim.bo.ui.RoleDocumentDelegation" collection-class="org.apache.ojb.broker.util.collections.ManageableArrayList" auto-retrieve="true" auto-update="object" auto-delete="object" proxy="false">
+      <inverse-foreignkey field-ref="documentNumber" />
+    </collection-descriptor>
+  </class-descriptor>
+	<!-- END AZ -->
+
+</descriptor-repository>
