@@ -2,7 +2,7 @@ require_relative '../lib/ojbequel'
 
 describe OJBequel::Repository, ".parse" do
   it "should find class-descriptors" do
-    repository = OJBequel::Repository.new(File.join(File.expand_path(File.dirname(__FILE__)), '..', 'ojb-vnd.xml'))
+    repository = OJBequel::Repository.new(File.join(File.expand_path(File.dirname(__FILE__)), '..', 'examples', 'ojb-vnd.xml'))
     repository.parse
     repository.class_descriptors.should_not == nil
     repository.class_descriptors.any? {|cd| cd[:rb_klazz] == 'VendorHeader' }.should ==  true
