@@ -27,7 +27,7 @@ module Kernel
   def pp_sequel_model_helper(model)  
     string = model.inspect
     # Example: #<PaymentRequestItemUseTax @values={:useTaxId=>1385, :objectId=>"F52DAC30-BC69-F38F-2FE7-5157E5028529", :versionNumber=>3, :itemIdentifier=>1676, :rateCode=>"ARIZONAUSE", :taxAmount=>#<BigDecimal:8241140,'0.66E0',9(18)>, :chartOfAccountsCode=>"UA", :accountNumber=>"2892000", :financialObjectCode=>"9190"}>
-    formatted = string =~ /(#\<\w+) @values={(.*)}(\>)/
+    formatted = string =~ /(#\<[A-Za-z:]+) @values={(.*)}(\>)/
     return puts '*' + string unless formatted
 
     name = $1

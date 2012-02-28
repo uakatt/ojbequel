@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Copyright 2005-2007 The Kuali Foundation. Licensed under the
+		Educational Community License, Version 1.0 (the "License"); you may
+		not use this file except in compliance with the License. You may
+		obtain a copy of the License at
+		http://www.opensource.org/licenses/ecl1.php Unless required by
+		applicable law or agreed to in writing, software distributed under the
+		License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+		CONDITIONS OF ANY KIND, either express or implied. See the License for
+		the specific language governing permissions and limitations under the
+		License.
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+                           
+    <bean id="purapModuleConfiguration" parent="rsmartPurapModuleConfiguration-parentBean" />                          
+    <bean id="rsmartPurapModuleConfiguration-parentBean" abstract="true" parent="purapModuleConfiguration-parentBean" >
+        <property name="packagePrefixes">
+            <list merge="true">
+                <value>com.rsmart.kuali.kfs.module.purap</value>
+            </list>
+        </property> 
+		<property name="dataDictionaryPackages">
+			<list merge="true">
+                <value>com/rsmart/kuali/kfs/module/purap/businessobject/datadictionary</value>
+                <value>com/rsmart/kuali/kfs/module/purap/document/datadictionary</value>
+			</list>
+		</property>   
+		<property name="databaseRepositoryFilePaths">
+			<list merge="true">
+			    <value>com/rsmart/kuali/kfs/module/purap/ojb-purap.xml</value>
+			</list>
+		</property>	
+		<property name="jobNames">
+			<list merge="true">
+				<value>loadPurchaseOrdersJob</value>
+			</list>
+		</property>			     
+    </bean>
+	
+	<!-- KITT-966 Changed to unscheduled -->
+	<bean id="loadPurchaseOrdersJob" parent="unscheduledJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="loadPurchaseOrdersStep" />
+			</list>
+		</property>
+	</bean>
+	
+    <bean id="loadPurchaseOrdersStep" class="com.rsmart.kuali.kfs.module.purap.batch.LoadPurchaseOrdersStep" parent="step">
+		<property name="purchaseOrderDocumentBatchService" ref="purchaseOrderDocumentBatchService"/>
+	</bean>
+	
+	<bean id="mimeTypeFile" class="org.springframework.core.io.ClassPathResource">
+        <constructor-arg type="java.lang.String">
+          <value>mimeType.properties</value>
+        </constructor-arg>
+    </bean>
+
+    <bean id="mimeTypeProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+         <property name="location" ref="mimeTypeFile"/>
+    </bean>
+	
+	<bean id="purchaseOrderInputFileType" class="com.rsmart.kuali.kfs.module.purap.batch.PurchaseOrderInputFileType">
+    	<property name="directoryPath">
+	       <value>${staging.directory}/purap/purchaseOrder</value>
+	    </property>
+	    <property name="fileExtension">
+	       <value>xml</value>
+	    </property>
+	    <property name="digestorRulesFileName">
+	       <value>com/rsmart/kuali/kfs/module/purap/batch/purchaseOrderDigesterRules.xml</value>
+	    </property>
+	    <property name="schemaLocation">
+	       <value>${externalizable.static.content.url}/xsd/purap/purchaseOrder.xsd</value>
+	    </property>
+	    <property name="purchaseOrderDocumentBatchService">
+	       <ref bean="purchaseOrderDocumentBatchService"/>
+	    </property>
+	    <property name="dateTimeService">
+	       <ref bean="dateTimeService"/>
+	    </property>
+	</bean>
+	
+	<bean id="purchaseOrderDocumentBatchService" class="com.rsmart.kuali.kfs.module.purap.batch.service.impl.PurchaseOrderDocumentBatchServiceImpl">
+		<property name="batchInputFileService" ref="batchInputFileService"/>
+		<property name="purchaseOrderInputFileType" ref="purchaseOrderInputFileType" />
+		<property name="businessObjectService" ref="businessObjectService"/>
+		<property name="documentService" ref="documentService"/>
+		<property name="dataDictionaryService" ref="dataDictionaryService"/>
+		<property name="sequenceAccessorService" ref="sequenceAccessorService"/>
+		<property name="dateTimeService" ref="dateTimeService"/>
+		<property name="vendorService" ref="vendorService"/>
+		<property name="personService" ref="personService"/>
+		<property name="phoneNumberService" ref="phoneNumberService"/>
+		<property name="kualiConfigurationService" ref="kualiConfigurationService"/>
+		<property name="universityDateService" ref="universityDateService"/>
+		<property name="persistenceService" ref="persistenceService"/>
+		<property name="purapService" ref="purapService"/>
+		<property name="purchaseOrderBatchReportInfo" ref="purchaseOrderBatchReportInfo"/>
+	    <property name="generalLedgerPendingEntryService" ref="generalLedgerPendingEntryService"/>
+	    <property name="batchFeedHelperService" ref="batchFeedHelperService"/>
+	    <property name="purchasingService" ref="purchasingService"/>
+		<property name="attachmentsPath">
+	       <value>${staging.directory}/purap/purchaseOrder</value>
+	    </property>
+	</bean>
+	
+	<bean id="purchaseOrderBatchReportInfo" class="org.kuali.kfs.sys.report.ReportInfoHolder" >
+		<property name="reportTitle" value="Purchase Order Batch Feed Report" />
+		<property name="reportFileName" value="purchase_order_batch" />
+		<property name="reportsDirectory" value="${reports.directory}/purap/" />
+		<property name="resourceBundleBaseName" value="com/rsmart/kuali/kfs/module/purap/report/message" />
+		<property name="reportTemplateClassPath" value="com/rsmart/kuali/kfs/module/purap/report/" />
+		<property name="reportTemplateName" value="PurchaseOrderBatchReport" />
+		<property name="subReportTemplateClassPath" value="com/rsmart/kuali/kfs/module/purap/report/" />
+		<property name="subReports">
+			<map>
+				<entry key="summaryLines" value="SummaryLines"/>
+				<entry key="poDocuments" value="PODocuments"/>
+				<entry key="items" value="POItems"/>
+				<entry key="accounting" value="POAccounting"/>
+			</map>
+		</property>
+	</bean>	
+	
+    <bean id="purapGeneralLedgerService" class="com.rsmart.kuali.kfs.module.purap.batch.service.impl.PurapGeneralLedgerServiceImpl">
+        <property name="businessObjectService" ref="businessObjectService"/>
+        <property name="dateTimeService" ref="dateTimeService"/>
+        <property name="generalLedgerPendingEntryService" ref="generalLedgerPendingEntryService"/>
+        <property name="kualiRuleService" ref="kualiRuleService"/>
+        <property name="objectCodeService" ref="objectCodeService"/>
+        <property name="paymentRequestService" ref="paymentRequestService" />
+        <property name="parameterService" ref="parameterService"/>
+        <property name="purapAccountingService" ref="purapAccountingService"/>
+        <property name="purchaseOrderService" ref="purchaseOrderService"/>
+        <property name="subObjectCodeService" ref="subObjectCodeService"/>
+        <property name="universityDateService" ref="universityDateService"/>
+    </bean>
+	
+</beans>

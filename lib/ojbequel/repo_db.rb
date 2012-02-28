@@ -99,8 +99,8 @@ module OJBequel::RepoDB
     String :rb_klazz
     String :collection_class
     Boolean :auto_retrieve
-    Boolean :auto_update
-    Boolean :auto_delete
+    String :auto_update
+    String :auto_delete
     Integer :tableau_id
   end
 
@@ -111,6 +111,7 @@ module OJBequel::RepoDB
   class Collection < Sequel::Model
     many_to_one :table
     one_to_many :inverse_foreignkeys
+    one_to_many :orderbies
 
     @@fields = [:name, :proxy, :'element-class-ref', :'collection-class', :'auto-retrieve', :'auto-update', :'auto-delete']
     def self.fields; @@fields; end
@@ -132,7 +133,7 @@ module OJBequel::RepoDB
     def self.fields; @@fields; end
   end
 
-  DB.create_table :orderbys do
+  DB.create_table :orderbies do
     primary_key :id
     String :name
     String :sort
@@ -144,5 +145,8 @@ module OJBequel::RepoDB
   # * Orderby has a *many_to_one* relationship with {Collection}.
   class Orderby < Sequel::Model
     many_to_one :collection
+
+    @@fields = [:name, :sort]
+    def self.fields; @@fields; end
   end
 end

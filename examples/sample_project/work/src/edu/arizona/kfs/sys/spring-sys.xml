@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!--
+  Copyright 2007 The Kuali Foundation. Licensed under the Educational
+  Community License, Version 1.0 (the "License"); you may not use this
+  file except in compliance with the License. You may obtain a copy of
+  the License at http://www.opensource.org/licenses/ecl1.php Unless
+  required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+  implied. See the License for the specific language governing
+  permissions and limitations under the License.
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+ xmlns:jaxws="http://cxf.apache.org/jaxws"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+ <bean id="financialSystemModuleConfiguration" parent="rsmartFinancialSystemModuleConfiguration-parentBean">
+  <property name="dataDictionaryPackages">
+   <list merge="true">
+    <value>edu/arizona/kfs/sys/businessobject/datadictionary</value>
+    <value>edu/arizona/kfs/sys/document/datadictionary</value>
+   </list>
+  </property>
+
+  <property name="packagePrefixes">
+   <list merge="true">
+    <value>edu.arizona.kfs.sys</value>
+   </list>
+  </property>
+
+  <property name="databaseRepositoryFilePaths">
+   <list merge="true">
+    <value>edu/arizona/kfs/sys/ojb-sys.xml</value>
+   </list>
+  </property>
+
+  <property name="jobNames">
+   <list merge="true">
+    <!--  KITT-1750 - Chart Outbound Messaging -->
+    <!-- 
+    <value>outboundMessageXsdGeneratorJob</value>
+    <value>outboundMessagePurgeExpiredJob</value>
+    <value>outboundMessageGenerateCompleteBusinessObjectFilesJob</value>
+    -->
+    <!--  END MOD -->
+    <!--  KITT-2096 - Interface from Archibus (building and Room) -->
+    <value>buildingImportJob</value>
+    <value>roomImportJob</value>
+    <!--  END MOD -->
+    <value>riceMessageDeliverySetSynchJob</value>
+    <value>riceMessageDeliverySetAsynchJob</value>
+   </list>
+  </property>
+ </bean>
+
+	<bean id="riceMessageDeliverySetSynchJob" parent="unscheduledJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="riceMessageDeliverySetSynchStep" />
+			</list>
+		</property>
+	</bean>
+	<bean id="riceMessageDeliverySetSynchStep" class="edu.arizona.kfs.sys.batch.RiceMessageDeliverySetSynchStep" parent="step">
+	  <property name="riceMessageDeliverySettingService">
+	   <ref bean="riceMessageDeliverySettingService" />
+	  </property>
+	</bean>
+	
+	<bean id="riceMessageDeliverySetAsynchJob" parent="unscheduledJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="riceMessageDeliverySetAsynchStep" />
+			</list>
+		</property>
+	</bean>
+	<bean id="riceMessageDeliverySetAsynchStep" class="edu.arizona.kfs.sys.batch.RiceMessageDeliverySetAsynchStep" parent="step">
+	  <property name="riceMessageDeliverySettingService">
+	   <ref bean="riceMessageDeliverySettingService" />
+	  </property>
+	</bean>
+	
+	<bean id="riceMessageDeliverySettingService"
+		class="edu.arizona.kfs.sys.service.impl.RiceMessageDeliverySettingServiceImpl" />
+
+ <bean id="buildingImportJob" parent="unscheduledJobDescriptor">
+  <property name="steps">
+   <list>
+    <ref bean="buildingImportStep" />
+   </list>
+  </property>
+ </bean>
+
+ <bean id="buildingImportStep" class="edu.arizona.kfs.sys.batch.BuildingImportStep"
+  parent="step">
+  <property name="buildingImportService">
+   <ref bean="buildingImportService" />
+  </property>
+ </bean>
+
+ <bean id="buildingImportService"
+  class="edu.arizona.kfs.sys.batch.service.impl.BuildingImportServiceImpl">
+  <property name="arichibusUsaCountryCode" value="USA" />
+  <property name="kfsUsCountryCode" value="US" />
+  <property name="batchFileDirectoryName" value="${staging.directory}/sys/import" />
+  <property name="reportDirectoryName" value="${reports.directory}/sys" />
+  <property name="businessObjectService"  ref="businessObjectService" /> 
+  <property name="ddService"  ref="dataDictionaryService" /> 
+  <property name="dateTimeService" ref="dateTimeService" />
+  <property name="buildingAndRoomImportDao" ref="buildingAndRoomImportDao" />
+ </bean>
+ 
+
+ <bean id="roomImportJob" parent="unscheduledJobDescriptor">
+  <property name="steps">
+   <list>
+    <ref bean="roomImportStep" />
+   </list>
+  </property>
+ </bean>
+
+ <bean id="roomImportStep" class="edu.arizona.kfs.sys.batch.RoomImportStep"
+  parent="step">
+  <property name="roomImportService">
+   <ref bean="roomImportService" />
+  </property>
+ </bean>
+
+ <bean id="roomImportService"
+  class="edu.arizona.kfs.sys.batch.service.impl.RoomImportServiceImpl">
+  <property name="batchFileDirectoryName" value="${staging.directory}/sys/import" />
+  <property name="reportDirectoryName" value="${reports.directory}/sys" />
+  <property name="businessObjectService" ref="businessObjectService" />
+  <property name="ddService"  ref="dataDictionaryService" /> 
+  <property name="dateTimeService" ref="dateTimeService" />
+  <property name="buildingAndRoomImportDao" ref="buildingAndRoomImportDao" />
+ </bean>
+ 
+ <bean id="buildingAndRoomImportDao"
+  class="edu.arizona.kfs.sys.dataaccess.impl.BuildingAndRoomImportsDaoOjb">
+    <property name="parameterService" ref="parameterService" />
+   </bean>
+ 
+ <bean id="electronicPaymentClaimLookupableHelperService"
+  class="edu.arizona.kfs.sys.businessobject.lookup.ElectronicPaymentClaimLookupableHelperServiceImpl"
+  scope="prototype" parent="lookupableHelperService">
+  <property name="lookupDao">
+   <ref bean="lookupDao" />
+  </property>
+  <property name="dataDictionaryService">
+   <ref bean="dataDictionaryService" />
+  </property>
+  <property name="boDictionaryService">
+   <ref bean="businessObjectDictionaryService" />
+  </property>
+ </bean>
+
+ <!--
+  <bean id="azSoapService"
+  class="org.kuali.rice.ksb.messaging.SOAPServiceDefinition"
+  abstract="true"> <property name="serviceNameSpaceURI" value="KFS"/>
+  <property name="priority" value="3" /> <property name="retryAttempts"
+  value="0" /> <property name="busSecurity" value="false"/> </bean>
+  <bean
+  class="org.kuali.rice.ksb.messaging.PropertyConditionalKSBExporter">
+  <property name="remotedServiceRegistry" ref="enServiceInvoker"/>
+  <property name="serviceDefinition"> <bean parent="azSoapService"
+  p:service-ref="remoteSchedulerService"
+  p:localServiceName="remoteSchedulerServiceSOAP" /> </property>
+  <property name="propertyName"
+  value="remoteSchedulerServiceSOAP.expose"/> </bean>
+ -->
+
+ <bean id="remoteSchedulerService"
+  class="edu.arizona.kfs.sys.batch.service.impl.RemoteSchedulerServiceImpl">
+  <property name="schedulerService" ref="schedulerService" />
+  <property name="businessObjectService" ref="businessObjectService" />
+  <property name="dateTimeService" ref="dateTimeService" />
+  <property name="requestorEmailAddress">
+   <null />
+  </property>
+ </bean>
+
+ <jaxws:endpoint id="remoteScheduler" implementor="#remoteSchedulerService"
+  address="/remoteSchedulerService" />
+
+ <!--
+  <bean id="remoteSchedulerService"
+  class="edu.arizona.kfs.sys.batch.service.impl.SchedulerJaxRpcPortProxyFactoryBean">
+  <property name="serviceInterface"
+  value="org.kuali.kfs.sys.batch.service.SchedulerService"/> <property
+  name="portInterface"
+  value="edu.arizona.kfs.sys.batch.service.RemoteSchedulerService"/>
+  <property name="wsdlDocumentUrl"
+  value="http://localhost:8080/kfs-dev/ws/schedulerService?WSDL"/>
+  <property name="namespaceUri"
+  value="http://localhost:8080/kfs-dev/ws/schedulerService"/> <property
+  name="serviceName" value="SchedulerService"/> <property
+  name="portName" value="SchedulerPort"/> </bean>
+ -->
+
+ <bean id="schedulerService"
+  class="org.kuali.kfs.sys.batch.service.impl.SchedulerServiceImpl">
+  <property name="scheduler" ref="scheduler" />
+  <property name="jobListener" ref="jobListener" />
+  <property name="kualiModuleService" ref="kualiModuleService" />
+  <property name="parameterService" ref="parameterService" />
+  <property name="dateTimeService" ref="dateTimeService" />
+  <property name="mailService" ref="mailService" />
+  <!--
+   START AZ KITT-966 changing to true so workflow ingestion job will run
+  -->
+  <property name="installScheduledJobs" value="true" />
+  <!-- END AZ -->
+ </bean>
+
+ <bean id="externalImagesServiceBean"
+  class="edu.arizona.kfs.sys.service.impl.ExternalImagesServiceImpl">
+  <!--
+   KITT-1017 Kevinmco line 105 where do these get their values?
+   arizona-build.properties
+  -->
+  <property name="password">
+   <value>${externalimages.application.password}</value>
+  </property>
+  <property name="userID">
+   <value>${externalimages.application.userid}</value>
+  </property>
+  <property name="serverURL">
+   <value>${externalimages.server.url}</value>
+  </property>
+  <property name="typeID">
+   <value>${externalimages.type.id}</value>
+  </property>
+ </bean>
+
+
+ <!-- MOD-GNRL-05 - Add delete permission to batch file screen -->
+ <bean id="batchFileAdminAuthorizationService"
+  class="edu.arizona.kfs.sys.batch.service.impl.UaBatchFileAdminAuthorizationServiceImpl" />
+
+ <!-- validations -->
+ <import
+  resource="document/validation/configuration/FinancialSystemValidators.xml" />
+
+ <!-- Create an unscheduled Daily Mail job -->
+ <bean id="dailyEmailJob" parent="unscheduledJobDescriptor">
+  <property name="steps">
+   <list>
+    <ref bean="dailyEmailStep" />
+   </list>
+  </property>
+ </bean>
+
+ <bean id="dailyEmailStep" class="edu.arizona.kfs.sys.batch.DailyEmailStep"
+  parent="step" />
+
+ <!-- Create an unscheduled Weekly Mail job -->
+ <bean id="weeklyEmailJob" parent="unscheduledJobDescriptor">
+  <property name="steps">
+   <list>
+    <ref bean="weeklyEmailStep" />
+   </list>
+  </property>
+ </bean>
+
+ <bean id="weeklyEmailStep" class="edu.arizona.kfs.sys.batch.WeeklyEmailStep"
+  parent="step" />
+
+ <!--  KITT-1750 - Chart Outbound Messaging -->
+ <!--  
+ <bean id="outboundMessageQueueDao"
+  class="edu.arizona.kfs.sys.dataaccess.impl.OutboundMessageQueueDaoOjb"
+  parent="platformAwareDao" />
+ <bean id="outboundMessageBusinessObjectPayloadDao"
+  class="edu.arizona.kfs.sys.dataaccess.impl.OutboundMessageBusinessObjectPayloadDaoOjb"
+  parent="platformAwareDao" />
+
+ <bean id="outboundMessageQueueService"
+  class="edu.arizona.kfs.sys.service.impl.OutboundMessageQueueServiceImpl"
+  p:businessObjectService-ref="businessObjectService"
+  p:sequenceAccessorService-ref="sequenceAccessorService"
+  p:parameterService-ref="parameterService" p:dao-ref="outboundMessageQueueDao"
+  p:scheduledPool-ref="enScheduledThreadPool" p:mailService-ref="mailService"
+  p:dateTimeService-ref="dateTimeService"
+  p:errorReportsDirectory="${reports.directory}/sys/outboundMessaging/errorReports"
+  p:initialQueueRunDelayAfterStartupSeconds="${outbound.message.queue.startup.delay.seconds}"
+  p:initialQueueRunDelayBetweenExecutionsSeconds="${outbound.message.queue.interval.seconds}">
+  <property name="outboundMessagePayloadServices">
+   <list>
+    <ref bean="outboundMessageBusinessObjectPayloadService" />
+   </list>
+  </property>
+ </bean>
+
+ <bean id="outboundMessageBusinessObjectPayloadService"
+  class="edu.arizona.kfs.sys.service.impl.OutboundMessageBusinessObjectPayloadServiceImpl"
+  p:outboundMessageBusinessObjectPayloadDao-ref="outboundMessageBusinessObjectPayloadDao"
+  p:dataDictionaryService-ref="dataDictionaryService"
+  p:persistenceStructureService-ref="persistenceStructureService"
+  p:persistenceService-ref="persistenceService"
+  p:businessObjectMetaDataService-ref="businessObjectMetaDataService"
+  p:businessObjectService-ref="businessObjectService"
+  p:sequenceAccessorService-ref="sequenceAccessorService"
+  p:parameterService-ref="parameterService" />
+
+ <bean id="outboundMessageXsdGeneratorStep"
+  class="edu.arizona.kfs.sys.batch.OutboundMessageXsdGeneratorStep"
+  parent="step" p:xsdOutputDirectory="${reports.directory}/sys/outboundMessaging/xsd"
+  p:outboundMessageQueueService-ref="outboundMessageQueueService" />
+
+ <bean id="outboundMessagePurgeExpiredStep"
+  class="edu.arizona.kfs.sys.batch.OutboundMessagePurgeExpiredStep"
+  parent="step" p:outboundMessageQueueService-ref="outboundMessageQueueService" />
+
+ <bean id="outboundMessageGenerateCompleteBusinessObjectFilesStep"
+  class="edu.arizona.kfs.sys.batch.OutboundMessageGenerateCompleteBusinessObjectFilesStep"
+  parent="step" p:outputDirectory="${reports.directory}/sys/outboundMessaging/fullExports"
+  p:outboundMessageBusinessObjectPayloadService-ref="outboundMessageBusinessObjectPayloadService" />
+
+ <bean id="outboundMessageXsdGeneratorJob" parent="unscheduledJobDescriptor">
+  <property name="steps">
+   <list>
+    <ref bean="outboundMessageXsdGeneratorStep" />
+   </list>
+  </property>
+ </bean>
+
+ <bean id="outboundMessagePurgeExpiredJob" parent="unscheduledJobDescriptor">
+  <property name="steps">
+   <list>
+    <ref bean="outboundMessagePurgeExpiredStep" />
+   </list>
+  </property>
+ </bean>
+
+ <bean id="outboundMessageGenerateCompleteBusinessObjectFilesJob"
+  parent="unscheduledJobDescriptor">
+  <property name="steps">
+   <list>
+    <ref bean="outboundMessageGenerateCompleteBusinessObjectFilesStep" />
+   </list>
+  </property>
+ </bean>
+ -->
+ <!--  END KITT-1750 -->
+ 
+ 	<bean id="autoDisapproveService" class="edu.arizona.kfs.sys.batch.service.impl.UaAutoDisapproveDocumentsServiceImpl">
+		<property name="documentService">
+			<ref bean="documentService" />
+		</property>
+    	<property name="parameterService">
+    	 <ref bean="parameterService" />
+		</property>		
+		<property name="dateTimeService">
+			<ref bean="dateTimeService" />
+		</property>
+		 <property name="noteService">
+			<ref bean="noteService" />
+		</property>	
+		<property name="autoDisapproveErrorReportWriterService">
+			<ref bean="autoDisapproveErrorReportWriterService" />
+		</property>
+	</bean>
+</beans>

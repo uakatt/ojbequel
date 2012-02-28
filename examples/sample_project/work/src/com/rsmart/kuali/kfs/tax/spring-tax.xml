@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Copyright 2005-2007 The Kuali Foundation. Licensed under the
+		Educational Community License, Version 1.0 (the "License"); you may
+		not use this file except in compliance with the License. You may
+		obtain a copy of the License at
+		http://www.opensource.org/licenses/ecl1.php Unless required by
+		applicable law or agreed to in writing, software distributed under the
+		License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+		CONDITIONS OF ANY KIND, either express or implied. See the License for
+		the specific language governing permissions and limitations under the
+		License.
+	-->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="taxModule" parent="taxModule-parentBean" />
+	<bean id="taxModule-parentBean" class="org.kuali.kfs.sys.FinancialSystemModuleConfiguration" abstract="true">
+		<property name="namespaceCode" value="KUALI-TAX"/>
+		<property name="initializeDataDictionary" value="true" />
+        <property name="packagePrefixes">
+            <list>
+                <value>com.rsmart.kuali.kfs.tax</value>
+            </list>
+        </property>
+		<property name="dataDictionaryPackages">
+			<list>
+				<value>com/rsmart/kuali/kfs/tax/businessobject/datadictionary</value>
+				<value>com/rsmart/kuali/kfs/tax/document/datadictionary</value>
+			</list>
+		</property>
+		<property name="databaseRepositoryFilePaths">
+			<list>
+				<value>com/rsmart/kuali/kfs/tax/ojb-tax.xml</value>
+			</list>
+		</property>
+		<property name="scriptConfigurationFilePaths">
+			<list>
+				<value>com/rsmart/kuali/kfs/tax/dwr-tax.xml</value>
+			</list>
+		</property>
+		<property name="jobNames">
+			<list>
+				<value>payeeMasterExtractJob</value>
+				<value>batchPayeeFormJob</value>
+			</list>
+		</property>
+		<property name="triggerNames">
+			<list>
+			<!-- START AZ KITT-966 Removing triggers, and changed both to unscheduled -->
+				<!-- <value>payeeMasterExtractJobTrigger</value>
+				<value>batchPayeeFormJobTrigger</value>-->
+			<!-- END AZ -->	
+			</list>
+		</property>
+        <property name="batchFileDirectories">
+          <list>
+            <value>${staging.directory}/1099</value>
+            <value>${reports.directory}/tax</value>
+            <value>${staging.directory}/tax</value>
+          </list>
+        </property>
+    </bean>
+
+    <bean id="taxModuleService" parent="taxModuleService-parentBean"/>
+
+    <bean id="taxModuleService-parentBean" class="org.kuali.kfs.sys.service.impl.KfsModuleServiceImpl" abstract="true">
+    	<property name="moduleConfiguration" ref="taxModule"/>
+    </bean>
+
+	<bean id="batchPayeeFormJob" parent="unscheduledJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="batchPayeeFormStep" />
+				<ref bean="electronicFilingStep" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="batchPayeeFormStep" class="com.rsmart.kuali.kfs.tax.batch.BatchPayeeFormStep" parent="step">
+		<property name="kualiConfigurationService"     ref="kualiConfigurationService" />
+		<property name="businessObjectService"         ref="businessObjectService" />
+		<property name="payeeSearchService"            ref="taxPayeeSearchService" />
+		<property name="pdfFormService"                ref="taxPdfFormService" />
+	</bean>
+
+	<bean id="electronicFilingStep" class="com.rsmart.kuali.kfs.tax.batch.ElectronicFilingStep" parent="step">
+		<property name="kualiConfigurationService"     ref="kualiConfigurationService" />
+		<property name="payeeSearchService"            ref="taxPayeeSearchService" />
+		<property name="electronicFilingService"       ref="taxElectronicFilingService" />
+	</bean>
+	
+	<bean id="batchPayeeFormJobTrigger" parent="cronTrigger">
+		<property name="jobName"        value="batchPayeeFormJob" />
+		<property name="cronExpression" value="0 0 7 12 1 ?" />
+	</bean>
+
+	<bean id="payeeMasterExtractJob" parent="unscheduledJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="payeeMasterExtractStep" />
+			</list>
+		</property>
+	</bean>
+			
+	<bean id="payeeMasterExtractStep" class="com.rsmart.kuali.kfs.tax.batch.PayeeMasterExtractStep" parent="step">
+		<property name="payeeMasterExtractService" ref="payeeMasterExtractService" />
+	</bean>
+
+	<bean id="payeeMasterExtractService" class="com.rsmart.kuali.kfs.tax.service.impl.PayeeMasterExtractServiceImpl">
+		<property name="businessObjectService"         ref="businessObjectService" />
+		<property name="paymentDetailSearchService"    ref="taxPaymentDetailSearchService" />
+		<property name="parameterService"              ref="parameterService" />
+	</bean>
+	
+	<bean id="payeeMasterExtractJobTrigger" parent="cronTrigger">
+		<property name="jobName"        value="payeeMasterExtractJob" />
+		<property name="cronExpression" value="0 0 7 12 1 ?" />
+	</bean>
+
+	<bean id="taxPayeeSearchService" class="com.rsmart.kuali.kfs.tax.document.service.impl.PayeeSearchServiceImpl">
+		<property name="businessObjectService"     ref="businessObjectService"/>
+		<property name="parameterService"          ref="parameterService" />
+		<property name="paymentDetailSearchDao"    ref="taxPaymentDetailSearchDao"/>
+	</bean>
+	
+	<bean id="taxPaymentDetailSearchService" class="com.rsmart.kuali.kfs.tax.document.service.impl.PaymentDetailSearchServiceImpl">
+		<property name="paymentDetailSearchDao" ref="taxPaymentDetailSearchDao"/>
+	</bean>
+	
+    <bean id="taxPaymentDetailSearchDao" parent="platformAwareDao" class="com.rsmart.kuali.kfs.tax.dataaccess.impl.PaymentDetailSearchDaoOjb" />
+	
+	<bean id="taxPdfFormService" class="com.rsmart.kuali.kfs.tax.document.service.impl.PdfFormServiceImpl" >
+		<property name="parameterService" ref="parameterService" />
+	</bean>
+	
+	<bean id="taxElectronicFilingService" class="com.rsmart.kuali.kfs.tax.document.service.impl.ElectronicFilingServiceImpl">
+		<property name="kualiConfigurationService"     ref="kualiConfigurationService" />
+		<property name="businessObjectService"         ref="businessObjectService" />
+		<property name="payeeSearchService"            ref="taxPayeeSearchService" />
+		<property name="parameterService"              ref="parameterService" />
+	</bean>
+	
+</beans>

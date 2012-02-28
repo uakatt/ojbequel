@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Copyright 2007 The Kuali Foundation. Licensed under the Educational
+		Community License, Version 1.0 (the "License"); you may not use this
+		file except in compliance with the License. You may obtain a copy of
+		the License at http://www.opensource.org/licenses/ecl1.php Unless
+		required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+		implied. See the License for the specific language governing
+		permissions and limitations under the License.
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	<bean id="vndModuleConfiguration" parent="vndModuleConfiguration-parentBean">
+		<property name="databaseRepositoryFilePaths">
+			<list merge="true">
+				<value>edu/arizona/kfs/vnd/ojb-vnd.xml</value>
+			</list>
+		</property>
+
+		<property name="packagePrefixes">
+			<list merge="true">
+				<value>edu.arizona.kfs.vnd</value>
+			</list>
+		</property>
+
+		<property name="dataDictionaryPackages">
+			<list merge="true">
+				<value>edu/arizona/kfs/vnd/businessobject/datadictionary</value>
+				<value>edu/arizona/kfs/vnd/document/datadictionary</value>
+			</list>
+		</property>
+		<property name="jobNames">
+			<list>
+				<value>eCustomsAnnualJob</value>
+			</list>
+		</property>
+		<property name="triggerNames">
+			<list>
+				<value>eCustomsAnnualJobCronTrigger</value>
+			</list>
+		</property>
+	</bean>
+
+    <bean id="vendorService" class="edu.arizona.kfs.vnd.document.service.impl.VendorServiceImpl">
+        <property name="vendorService">
+            <bean class="org.kuali.kfs.vnd.document.service.impl.VendorServiceImpl">
+		        <property name="vendorDao" ref="vendorDao"/>
+        		<property name="businessObjectService" ref="businessObjectService"/>
+       			<property name="documentService" ref="documentService"/>
+     		    <property name="persistenceService" ref="persistenceService" />
+ 		   </bean>
+        </property>
+        <property name="documentService" ref="documentService"/>
+    </bean>
+
+	<!-- BEGIN MOD - KITT-1092/MOD-PA7000-01 -->
+	<bean id="eCustomsFileCreationService"
+		class="edu.arizona.kfs.vnd.document.service.impl.ECustomsFileCreationServiceImpl">
+		<property name="vendorService" ref="vendorService" />
+		<property name="businessObjectService" ref="businessObjectService" />
+		<property name="filePath" value="${ecustoms.output.directory}" />
+		<property name="fileNamePrefix" value="${ecustoms.output.file.prefix}" />
+	</bean>	
+	
+	<bean id="eCustomsAnnualJobCronTrigger" parent="cronTrigger">
+		<property name="group" value="unscheduled" />		
+		<property name="jobName" value="eCustomsAnnualJob" />
+		<property name="cronExpression" value="${ecustoms.annual.job.cron.expression}" />
+	</bean>
+
+	<bean id="eCustomsAnnualJob" parent="unscheduledJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="eCustomsAnnualStep" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="eCustomsAnnualStep" class="edu.arizona.kfs.vnd.batch.ECustomsAnnualStep" parent="step">
+		<property name="eCustomsFileCreationService">
+			<ref bean="eCustomsFileCreationService"/>
+		</property>
+	</bean>
+	<!-- END MOD -->	
+</beans>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+    <bean id="arModuleConfiguration" parent="arModuleConfiguration-parentBean">
+    	<property name="namespaceCode" value="KFS-AR" />
+        <property name="packagePrefixes">
+            <list merge="true">
+                <value>edu.arizona.kfs.module.ar</value>
+            </list>
+        </property>
+		<property name="dataDictionaryPackages">
+			<list merge="true">
+			</list>
+		</property>
+		<property name="databaseRepositoryFilePaths">
+			<list merge="true">
+			</list>
+		</property>
+		<property name="jobNames">
+			<list merge="true">
+			</list>
+		</property>
+		<property name="triggerNames">
+			<list merge="true">
+			</list>
+		</property>
+		<property name="scriptConfigurationFilePaths">
+			<list merge="true">
+			</list>
+		</property>
+		<property name="fiscalYearMakers">
+			<list merge="true">
+			</list>
+        </property>
+        <property name="batchFileDirectories">
+			<list merge="true">
+			</list>
+        </property>
+	</bean>
+	
+	<!-- KFSI-3900 KITT-2529 KFSI-3901 KITT-2530 bring in foundation code... need to inject BO service as a result of foundation changes-->
+	<bean id="invoiceRecurrenceService" class="org.kuali.kfs.module.ar.batch.service.impl.InvoiceRecurrenceServiceImpl">
+		<property name="invoiceRecurrenceDao">
+			<ref bean="invoiceRecurrenceDao" />
+		</property>
+		<property name="documentService">
+			<ref bean="documentService" />
+		</property>
+		<property name="dateTimeService">
+			<ref bean="dateTimeService" />
+		</property>
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>		
+	</bean>
+	
+	<bean id="invoiceRecurrenceStep" class="edu.arizona.kfs.module.ar.batch.UaInvoiceRecurrenceStep" parent="step">
+		<property name="invoiceRecurrenceService">
+			<ref bean="invoiceRecurrenceService" />
+		</property>
+	</bean>
+</beans>
+

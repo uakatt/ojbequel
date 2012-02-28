@@ -1,11 +1,11 @@
 require_relative '../lib/ojbequel'
 
-describe OJBequel::RBStringFactory, ".build" do
+describe OJBequel::ModelFactory::RBStringFactory, ".build" do
   before :all do
     @repository = OJBequel::Repository.new(File.join(File.expand_path(File.dirname(__FILE__)), '..', 'examples', 'ojb-vnd.xml'))
     @repository.parse
 
-    @factory = OJBequel::RBStringFactory.new(@repository)
+    @factory = OJBequel::ModelFactory::RBStringFactory.new(@repository)
   end
 
   before :each do
@@ -94,5 +94,35 @@ DB_EXPECTATION
 
   it "should build class strings, setting the primary key correctly" do
     @campus_parameter_string.should include('set_primary_key [:campusCode]')
+  end
+
+  it "should build class strings, setting up reference tables correctly" do
+    @vendor_header_string.should include('many_to_one :vendorType, :class => :VendorType, :key => [:vendorTypeCode]')
+    @vendor_header_string.should include('many_to_one :vendorOwnership, :class => :OwnershipType, :key => [:vendorOwnershipCode]')
+    @vendor_header_string.should include('many_to_one :vendorOwnershipCategory, :class => :OwnershipCategory, :key => [:vendorOwnershipCategoryCode]')
+  end
+
+  it "should build class strings, setting up collections correctly" do
+    @vendor_header_string.should include('one_to_many :vendorSupplierDiversities,')
+    @vendor_header_string.should include('            :class => :VendorSupplierDiversity,')
+    @vendor_header_string.should include('            :key => [:vendorHeaderGeneratedIdentifier]')
+
+    @vendor_header_string.should include('one_to_many :vendorTaxChanges,')
+    @vendor_header_string.should include('            :class => :VendorTaxChange,')
+    @vendor_header_string.should include('            :key => [:vendorHeaderGeneratedIdentifier]')
+  end
+
+  it "should build class strings, setting up collections and an orderby correctly" do
+    @vendor_detail_string.should include('one_to_many :vendorAliases,')
+    @vendor_detail_string.should include('            :class => :VendorAlias,')
+    @vendor_detail_string.should include('            :order => [:vendorAliasName],')
+    @vendor_detail_string.should include('            :key => [:vendorHeaderGeneratedIdentifier, :vendorDetailAssignedIdentifier]')
+  end
+
+  it "should build class strings, setting up collections and an orderby correctly" do
+    @vendor_detail_string.should include('one_to_many :vendorCustomerNumbers,')
+    @vendor_detail_string.should include('            :class => :VendorCustomerNumber,')
+    @vendor_detail_string.should include('            :order => [:chartOfAccountsCode, :vendorOrganizationCode],')
+    @vendor_detail_string.should include('            :key => [:vendorHeaderGeneratedIdentifier, :vendorDetailAssignedIdentifier]')
   end
 end

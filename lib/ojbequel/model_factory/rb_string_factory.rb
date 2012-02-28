@@ -1,5 +1,5 @@
-class OJBequel::RBStringFactory
-  # Create a new RBStringFactory for one or more OJB repository files.
+class OJBequel::ModelFactory::RBStringFactory
+  # Create a new {OJBequel::ModelFactory::RBStringFactory} for one or more OJB repository files.
   #
   # @param [OJBequel::Repository] repositories one or more repositories to use when building Strings
   def initialize(*repositories)
@@ -60,15 +60,15 @@ require 'connection'
 
     string << "end\n"
 
-#    string << <<DEFN
-#class #{klazz_name}
-#  Definition = "#{string}"
-#
-#  def self.definition
-#    OJBequel::Utils.less Definition
-#  end
-#end
-#DEFN
+    string << <<DEFN
+class #{klazz_name}
+  Definition = "#{string}"
+
+  def self.definition
+    OJBequel::Utils.less Definition
+  end
+end
+DEFN
 
     #string << add_definition(klazz_name, string)
     string
@@ -80,7 +80,14 @@ require 'connection'
   #     one_to_many :useTaxItems, :class => XXXX, :key => :itemIdentifier
   def add_collections(klazz, string)
     klazz.collections.each do |c|
-      string << "  one_to_many #{c.name.to_sym.inspect}, :class => #{c.rb_klazz.to_sym.inspect}, :key => #{c.inverse_foreignkeys.map {|ifk| ifk.field.to_sym}.inspect}\n"
+      orderby_str = ''
+      if not c.orderbies.empty?
+        orderby_str = "              :order => #{c.orderbies.map {|o| o.name.to_sym}.inspect},\n"
+      end
+      string << "  one_to_many #{c.name.to_sym.inspect},\n" +
+        "              :class => #{c.rb_klazz.to_sym.inspect},\n" +
+        orderby_str +
+        "              :key => #{c.inverse_foreignkeys.map {|ifk| ifk.field.to_sym}.inspect}\n"
     end
     string
   end

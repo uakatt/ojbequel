@@ -71,6 +71,7 @@ class OJBequel::Repository
     remaining = cod.attributes.dup.delete_if { |k,v| Collection.fields.include? k.to_sym }
     remaining.each { |k,v| puts "New field for #{cod[:name]}: #{k.inspect} = #{v}" }
     parse_inverse_foreignkeys(cod, collection)
+    parse_orderbies(cod, collection)
   end
 
   # Iterate over all of the `<collection-descriptor>`'s under a given `<class-descriptor>`, calling {#parse_collection_descriptor} on each
@@ -149,6 +150,22 @@ class OJBequel::Repository
   def parse_inverse_foreignkeys(cod, collection)
     cod.xpath('.//inverse-foreignkey').each do |ifk|
       parse_inverse_foreignkey(collection, ifk)
+    end
+  end
+
+  def parse_orderby(collection, o)
+    Orderby.insert(:name          => o[:'name'],
+                   :sort          => o[:'sort'],
+                   :collection_id => collection[:id])
+
+    remaining = o.attributes.dup.delete_if { |k,v| Orderby.fields.include? k.to_sym }
+    remaining.each { |k,v| puts "New field for #{o[:'name']}: #{k.inspect} = #{v}" }
+  end
+
+  # Iterate over all of the `<orderby>`'s under a given `<collection-descriptor>`, calling {#parse_orderby} on each
+  def parse_orderbies(cod, collection)
+    cod.xpath('.//orderby').each do |o|
+      parse_orderby(collection, o)
     end
   end
 

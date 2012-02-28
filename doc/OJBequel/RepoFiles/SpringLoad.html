@@ -1,0 +1,628 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: OJBequel::RepoFiles::SpringLoad
+  
+    &mdash; Documentation by YARD 0.7.3
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '../..';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (S)</a> &raquo; 
+    <span class='title'><span class='object_link'><a href="../../OJBequel.html" title="OJBequel (module)">OJBequel</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../RepoFiles.html" title="OJBequel::RepoFiles (class)">RepoFiles</a></span></span>
+     &raquo; 
+    <span class="title">SpringLoad</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Class: OJBequel::RepoFiles::SpringLoad
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Base.html" title="OJBequel::RepoFiles::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="OJBequel::RepoFiles::Base (class)">Base</a></span></li>
+          
+            <li class="next">OJBequel::RepoFiles::SpringLoad</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/ojbequel/repo_files/spring_load.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Use SpringLoad if the OJB repository files are all indicated in a Spring XML file or a Spring
+properties file.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+  
+  
+  
+  
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#files-instance_method" title="#files (instance method)">- (Object) <strong>files</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute files.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#spring_bootstrap_file-instance_method" title="#spring_bootstrap_file (instance method)">- (Object) <strong>spring_bootstrap_file</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute spring_bootstrap_file.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#type-instance_method" title="#type (instance method)">- (Object) <strong>type</strong> </a>
+    
+
+    
+  </span>
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute type.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#find-instance_method" title="#find (instance method)">- (Object) <strong>find</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Find all OJB repository files, using the base directory, and the regular expression provided
+when the <span class='object_link'><a href="FileGlob.html" title="OJBequel::RepoFiles::FileGlob (class)">FileGlob</a></span> was created.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (SpringLoad) <strong>initialize</strong>(spring_bootstrap_file, options = {}) </a>
+    
+
+    
+  </span>
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new <span class='object_link'><a href="" title="OJBequel::RepoFiles::SpringLoad (class)">SpringLoad</a></span> to maintain a hash of OJB repository files, in
+(<code>name</code> : <code>path</code>) Hash format.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Base.html" title="OJBequel::RepoFiles::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base.html#method_missing-instance_method" title="OJBequel::RepoFiles::Base#method_missing (method)">#method_missing</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <p class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="OJBequel::RepoFiles::SpringLoad (class)">SpringLoad</a></span></tt>) <strong>initialize</strong>(spring_bootstrap_file, options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Create a new <span class='object_link'><a href="" title="OJBequel::RepoFiles::SpringLoad (class)">OJBequel::RepoFiles::SpringLoad</a></span> to maintain a hash of OJB repository files, in
+(<code>name</code> : <code>path</code>) Hash format.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4><div class='inline'><p>Save names of OJB files like "ojb-foo.xml"</p>
+</div></h4>
+      <pre class="example code"><span class='const'>OJBequel</span><span class='op'>::</span><span class='const'>RepoFiles</span><span class='op'>::</span><span class='const'>FileGlob</span><span class='period'>.</span><span class='id new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>/java/projects/kc/src/main/resources/kc-bootstrap-springbeans.xml</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span></pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>spring_bootstrap_file</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the Spring bootstrap file (either a properties file or
+an XML file) of the project that uses OJB. This file is expected to point to Spring XML files
+that each reference one or more OJB repository files.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>various options</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:type</span>
+          <span class="type">(<tt>Symbol</tt>)</span>
+          <span class="default">
+            
+          </span>
+          &mdash; <div class='inline'><p>If <code>spring_bootstrap_file</code> ends in ".xml" or ".properties", the file
+type will be figured out automatically. Otherwise, you can specify <code>:type =&gt; :xml</code> or
+<code>:type =&gt; :properties</code>.</p>
+</div>
+        </li>
+      
+    </ul>
+  
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21
+22
+23
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repo_files/spring_load.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id initialize'>initialize</span><span class='lparen'>(</span><span class='id spring_bootstrap_file'>spring_bootstrap_file</span><span class='comma'>,</span> <span class='id options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@spring_bootstrap_file</span> <span class='op'>=</span> <span class='id spring_bootstrap_file'>spring_bootstrap_file</span>
+  <span class='kw'>if</span> <span class='ivar'>@spring_bootstrap_file</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.xml$</span><span class='regexp_end'>/</span></span>
+    <span class='ivar'>@type</span> <span class='op'>=</span> <span class='symbol'>:xml</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@spring_bootstrap_file</span> <span class='op'>=~</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.properties$</span><span class='regexp_end'>/</span></span>
+    <span class='ivar'>@type</span> <span class='op'>=</span> <span class='symbol'>:properties</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice super">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+      in the class <span class='object_link'><a href="Base.html#method_missing-instance_method" title="OJBequel::RepoFiles::Base#method_missing (method)">OJBequel::RepoFiles::Base</a></span>
+    
+  </p>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="files=-instance_method"></span>
+      <span id="files-instance_method"></span>
+      <div class="method_details first">
+  <p class="signature first" id="files-instance_method">
+  
+    - (<tt>Object</tt>) <strong>files</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute files</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repo_files/spring_load.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id files'>files</span>
+  <span class='ivar'>@files</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="spring_bootstrap_file=-instance_method"></span>
+      <span id="spring_bootstrap_file-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="spring_bootstrap_file-instance_method">
+  
+    - (<tt>Object</tt>) <strong>spring_bootstrap_file</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute spring_bootstrap_file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repo_files/spring_load.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id spring_bootstrap_file'>spring_bootstrap_file</span>
+  <span class='ivar'>@spring_bootstrap_file</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="type=-instance_method"></span>
+      <span id="type-instance_method"></span>
+      <div class="method_details ">
+  <p class="signature " id="type-instance_method">
+  
+    - (<tt>Object</tt>) <strong>type</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute type</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repo_files/spring_load.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id type'>type</span>
+  <span class='ivar'>@type</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="find-instance_method">
+  
+    - (<tt>Object</tt>) <strong>find</strong> 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong> 
+    <div class='inline'><p>Raise a better exception if no active group existed in the regular expression.</p>
+</div>
+  </div>
+
+<p>Find all OJB repository files, using the base directory, and the regular expression provided
+when the <span class='object_link'><a href="FileGlob.html" title="OJBequel::RepoFiles::FileGlob (class)">FileGlob</a></span> was created. This method skips any files with <code>.svn</code>
+in the path.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<h3>Returns:</h3>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>the <code>@files</code> instance variable that this method creates</p>
+</div>
+      
+    </li>
+  
+</ul>
+<h3>Raises:</h3>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>StandardError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36
+37
+38</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ojbequel/repo_files/spring_load.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id find'>find</span><span class='lparen'>(</span><span class='rparen'>)</span>
+  <span class='id find_by_xml'>find_by_xml</span>        <span class='kw'>if</span> <span class='ivar'>@type</span> <span class='op'>==</span> <span class='symbol'>:xml</span>
+  <span class='id find_by_properties'>find_by_properties</span> <span class='kw'>if</span> <span class='ivar'>@type</span> <span class='op'>==</span> <span class='symbol'>:properties</span>
+  <span class='id raise'>raise</span> <span class='const'>StandardError</span>  <span class='comment'># what is the file type?!?
+</span><span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Mon Nov 14 09:28:53 2011 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.3 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

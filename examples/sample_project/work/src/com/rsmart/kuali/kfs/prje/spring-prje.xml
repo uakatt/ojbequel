@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright 2005-2007 The Kuali Foundation.
+ 
+ Licensed under the Educational Community License, Version 1.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.opensource.org/licenses/ecl1.php
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+          "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="prjeModule" parent="prjeModule-parent" />
+
+    <bean id="prjeModule-parent" abstract="true"
+          class="org.kuali.kfs.sys.FinancialSystemModuleConfiguration">
+
+		<property name="namespaceCode" value="KUALI-PRJE"/>
+		<property name="initializeDataDictionary" value="true" />
+        <property name="packagePrefixes">
+            <list>
+                <value>com.rsmart.kuali.kfs.prje</value>
+            </list>
+        </property>
+		<property name="dataDictionaryPackages">
+			<list>
+                <value>com/rsmart/kuali/kfs/prje/bo/dict</value>
+                <value>com/rsmart/kuali/kfs/prje/doc/dict</value>
+			</list>
+		</property>
+		<property name="databaseRepositoryFilePaths">
+			<list>
+				<value>com/rsmart/kuali/kfs/prje/ojb-prje.xml</value>
+			</list>
+		</property>
+		<property name="scriptConfigurationFilePaths">
+			<list>
+				<value>com/rsmart/kuali/kfs/prje/dwr-prje.xml</value>
+			</list>
+		</property>
+		<property name="jobNames">
+			<list>
+				<value>prjeJob</value>
+			</list>
+		</property>
+		<property name="triggerNames">
+			<list>
+			<!-- START AZ KITT-966 Removing triggers -->
+				<!-- <value>prjeJobTrigger</value>-->
+			<!-- END AZ -->
+			</list>
+		</property>
+        <property name="batchFileDirectories">
+          <list>
+            <value>${reports.directory}/prje</value>
+            <value>${staging.directory}/prje</value>
+          </list>
+        </property>
+	</bean>
+
+    <bean id="prjeModuleService" parent="prjeModuleService-parent"/>
+
+    <bean id="prjeModuleService-parent" abstract="true"
+          class="org.kuali.kfs.sys.service.impl.KfsModuleServiceImpl">
+    	<property name="moduleConfiguration" ref="prjeModule"/>
+    </bean>
+
+	<bean id="prjeDataAccess" parent="platformAwareDao"  
+	      class="com.rsmart.kuali.kfs.prje.impl.PRJEDataAccessImpl" />
+
+    <bean id="prjePostingLedgerReportWriterService" 
+          class="org.kuali.kfs.sys.service.impl.ReportWriterTextServiceImpl">
+
+        <property name="filePath" value="${reports.directory}/prje"/>
+        <property name="fileNamePrefix" value="prje_main_ledger_"/>
+        <property name="fileNameSuffix" value=".txt" />
+        <property name="title" value="PRJE Poster Output Transactions"/>
+
+        <property name="pageWidth" value="123" />
+        <property name="pageLength" value="53" />
+        <property name="initialPageNumber" value="1" />
+        <property name="errorSubTitle" value="ERROR AND STATISTICS REPORT" />
+        <property name="statisticsLabel" value="                                    S T A T I S T I C S                                    " />
+        <property name="statisticsLeftPadding" value="                             " />
+        <property name="pageLabel" value="PAGE:" />
+        <property name="newLineCharacter" value="&#xA;" />
+        <property name="dateTimeService" ref="dateTimeService" />
+
+        <property name="classToBusinessObjectReportHelperBeanNames">
+            <map>
+                <entry key="org.kuali.kfs.gl.businessobject.LedgerSummaryTotalLine" 
+                       value="ledgerSummaryTotalLineReportHelper" />
+                <entry key="org.kuali.kfs.gl.businessobject.LedgerBalanceTypeSummaryTotalLine"
+                       value="ledgerBalanceTypeSummaryTotalLineReportHelper" />
+                <entry key="org.kuali.kfs.gl.businessobject.LedgerSummaryDetailLine"
+                       value="ledgerSummaryDetailLineReportHelper" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="prjeSetReportHelper" 
+          parent="businessObjectReportHelper">
+        <property name="dataDictionaryBusinessObjectClass" 
+                  value="com.rsmart.kuali.kfs.prje.bo.PRJESet" />
+        <property name="orderedPropertyNameToHeaderLabelMap">
+            <map>
+                <entry key="setId" value="SET ID" />
+                <entry key="fiscalYear" value="FISC YR" />
+                <entry key="setName" value="NAME" />
+                <entry key="setDescription" value="DESC" />
+            </map>
+        </property>
+        <property name="columnCount" value="4" />
+    </bean>
+
+    <bean id="prjeTypeReportHelper" 
+          parent="businessObjectReportHelper">
+        <property name="dataDictionaryBusinessObjectClass" 
+                  value="com.rsmart.kuali.kfs.prje.bo.PRJEType" />
+        <property name="orderedPropertyNameToHeaderLabelMap">
+            <map>
+                <entry key="typeId" value="TYPE ID" />
+                <entry key="setId" value="SET ID" />
+                <entry key="entryName" value="NAME" />
+                <entry key="prorateOptions" value="OPTIONS" />
+            </map>
+        </property>
+        <property name="columnCount" value="4" />
+    </bean>
+
+    <bean id="prjeAuditItemReportHelper"
+          parent="businessObjectReportHelper">
+        <property name="dataDictionaryBusinessObjectClass" 
+                  value="com.rsmart.kuali.kfs.prje.bo.PRJEAuditItem" />
+        <property name="orderedPropertyNameToHeaderLabelMap">
+            <map>
+                <entry key="docType" value="Doc Type" />
+                <entry key="docNumber" value="Doc Nbr" />
+                <entry key="description" value="Description" />
+                <entry key="fromAccount" value="Acct Nbr" />
+                <entry key="fromSubAccount" value="Sub Acct" />
+                <entry key="fromObjectCode" value="Object Code" />
+                <entry key="fromSubObject" value="Sub Obj" />
+                <entry key="fromBaseAmount" value="Base Amount" />
+                <entry key="fromRate" value="Rate" />
+                <entry key="fromFromAmount" value="Trans Amount" />
+                <entry key="fromDebitCredit" value="DR CR" />
+                <entry key="toAccount" value="Acct Nbr" />
+                <entry key="toSubAccount" value="Sub Acct" />
+                <entry key="toObjectCode" value="Object Code" />
+                <entry key="toSubObject" value="Sub Obj" />
+                <entry key="toAmount" value="Amount" />
+                <entry key="toDebitCredit" value="DR CR" />
+            </map>
+        </property>
+        <property name="columnCount" value="17" />
+    </bean>
+
+    <bean id="prjeAuditReportWriterService" 
+          class="org.kuali.kfs.sys.service.impl.ReportWriterTextServiceImpl">
+
+        <property name="filePath" value="${reports.directory}/prje"/>
+        <property name="fileNamePrefix" value="prje_audit_"/>
+        <property name="fileNameSuffix" value=".txt" />        
+        <property name="title" value="Prorate Journal Entry Audit Report"/>
+
+        <property name="pageWidth" value="204" />
+        <property name="pageLength" value="53" />
+        <property name="initialPageNumber" value="1" />
+        <property name="pageLabel" value="PAGE:" />
+        <property name="newLineCharacter" value="&#xA;" />
+        <property name="dateTimeService" ref="dateTimeService" />
+
+        <property name="classToBusinessObjectReportHelperBeanNames">
+            <map>
+                <entry key="com.rsmart.kuali.kfs.prje.bo.PRJESet"
+                       value="prjeSetReportHelper" />
+                <entry key="com.rsmart.kuali.kfs.prje.bo.PRJEType"
+                       value="prjeTypeReportHelper" />
+                <entry key="com.rsmart.kuali.kfs.prje.bo.PRJEAuditItem"
+                       value="prjeAuditItemReportHelper" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="prjeReports" parent="prjeReports-parent"/>    
+    <bean id="prjeReports-parent" abstract="true" 
+          class="com.rsmart.kuali.kfs.prje.impl.PRJEReportsImpl">
+       <property name="prjeDataAccess" ref="prjeDataAccess" />
+       <property name="businessObjectService" ref="businessObjectService" />
+       <property name="parameterService" ref="parameterService" />
+       <property name="objectCodeService" ref="objectCodeService" />
+       <property name="dateTimeService" ref="dateTimeService" />
+       <property name="universityDateService" ref="universityDateService" />
+       <property name="batchFileDirectoryName" value="${staging.directory}/gl/originEntry"/>
+       <property name="ledgerReportWriterService" ref="prjePostingLedgerReportWriterService" />
+       <property name="auditReportWriterService" ref="prjeAuditReportWriterService" />
+       <property name="prjeService" ref="prjeService" />
+    </bean>
+
+	<bean id="prjeService" parent="prjeService-parent"/>	
+	<bean id="prjeService-parent" abstract="true"
+	      class="com.rsmart.kuali.kfs.prje.impl.PRJEServiceImpl">
+	   <property name="prjeDataAccess" ref="prjeDataAccess" />
+       <property name="businessObjectService" ref="businessObjectService" />
+       <property name="parameterService" ref="parameterService" />
+       <property name="objectCodeService" ref="objectCodeService" />
+       <property name="dateTimeService" ref="dateTimeService" />
+       <property name="universityDateService" ref="universityDateService" />
+       <property name="batchFileDirectoryName" value="${staging.directory}/gl/originEntry"/>
+       <property name="propertyFileDirectoryName" value="${staging.directory}/prje"/>
+       <property name="prjeReports" ref="prjeReports" />
+	</bean>
+
+	<!-- KITT-966 Changed to unscheduled -->
+	<bean id="prjeJob" parent="unscheduledJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="prjeTransactionStep" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="prjeTransactionStep" parent="step"
+	      class="com.rsmart.kuali.kfs.prje.impl.PRJETransactionStepImpl">
+		<property name="prjeService" ref="prjeService" />
+	</bean>
+
+	<bean id="prjeJobTrigger" parent="cronTrigger">
+		<property name="jobName" value="prjeJob" />
+		<property name="cronExpression" value="0 0 23 L * ?" ></property>
+	</bean>
+</beans>

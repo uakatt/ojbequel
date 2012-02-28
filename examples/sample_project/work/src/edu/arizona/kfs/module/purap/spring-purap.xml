@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright 2006-2007 The Kuali Foundation.
+ 
+ Licensed under the Educational Community License, Version 1.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.opensource.org/licenses/ecl1.php
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+                           
+    <bean id="purapModuleConfiguration" parent="rsmartPurapModuleConfiguration-parentBean" >
+		<property name="initializeDataDictionary" value="true" />
+		<property name="dataDictionaryPackages">
+			<list merge="true">
+                <value>edu/arizona/kfs/module/purap/businessobject/datadictionary</value>
+                <value>edu/arizona/kfs/module/purap/document/datadictionary</value>
+			</list>
+		</property>
+        <!-- jhkeller - added missing property needed when BOs/docs
+             are defined in an institution module -->
+        <property name="packagePrefixes">
+          <list merge="true">
+            <value>edu.arizona.kfs.module.purap</value>
+          </list>
+        </property>
+		<property name="databaseRepositoryFilePaths">
+			<list merge="true">
+				<value>edu/arizona/kfs/module/purap/ojb-purap.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+    <bean id="b2bPurchaseOrderService" class="edu.arizona.kfs.module.purap.document.service.impl.B2BPurchaseOrderAZSciquestServiceImpl">
+        <property name="b2bDao" ref="b2bDao"/>
+        <property name="requisitionService" ref="requisitionService"/>
+        <property name="parameterService" ref="parameterService"/>
+        <property name="b2bEnvironment">
+        	<value>${b2b.environment}</value>
+        </property>
+        <property name="b2bPunchoutURL">
+        	<value>${b2b.punch.out.url}</value>
+        </property>
+        <property name="b2bPunchbackURL">
+        	<value>${b2b.punch.back.url}</value>
+        </property>
+        <property name="b2bUserAgent">
+        	<value>${b2b.user.agent}</value>
+        </property>
+        <property name="b2bShoppingPassword">
+        	<value>${b2b.shopping.password}</value>
+        </property>
+        <property name="b2bPurchaseOrderURL">
+        	<value>${b2b.purchase.order.url}</value>
+        </property>
+        <property name="b2bPurchaseOrderPassword">
+        	<value>${b2b.purchase.order.password}</value>
+        </property>
+    </bean>
+
+	<bean id="electronicInvoiceInputFileType" class="edu.arizona.kfs.module.purap.batch.ElectronicInvoiceInputFileType">
+    	<property name="directoryPath">
+	       <value>${staging.directory}/purap/electronicInvoice</value>
+	    </property>
+	    <property name="fileExtension">
+	       <value>xml</value>
+	    </property>
+	    <property name="digestorRulesFileName">
+	       <value>org/kuali/kfs/module/purap/batch/electronicInvoiceDigesterRules.xml</value>
+	    </property>
+	    <property name="schemaLocation">
+	       <value>${externalizable.static.content.url}/xsd/purap/electronicInvoice.xsd</value>
+	    </property>
+		<!-- KITT-1880 - Electronic Invoicing should not stop entire batch job if one document fails  -->
+	    <property name="reportPrefix">
+	       <value>purapElectronicInvoiceExtractJob</value>
+	    </property>
+	    <property name="reportExtension">
+	       <value>txt</value>
+	    </property>
+    	<property name="reportPath">
+	       <value>${reports.directory}/purap</value>
+	    </property>
+	</bean>
+	
+    <bean id="b2bDao" class="edu.arizona.kfs.module.purap.dataaccess.impl.B2BDaoImpl"/>
+
+	<!-- KITT-592 - replace the payment request service with one which uses the new payment method-based GL entry generator  -->
+    <bean id="paymentRequestService" class="edu.arizona.kfs.module.purap.document.service.impl.UaPaymentRequestServiceImpl">
+		<property name="dateTimeService" ref="dateTimeService" />
+		<property name="paymentRequestDao" ref="paymentRequestDao" />
+        <property name="documentService" ref="documentService" />
+        <property name="purapService" ref="purapService" />
+        <property name="noteService" ref="noteService" />
+        <property name="parameterService" ref="parameterService" />
+        <property name="configurationService" ref="kualiConfigurationService" />
+        <property name="negativePaymentRequestApprovalLimitService" ref="negativePaymentRequestApprovalLimitService" />
+        <property name="purapAccountingService" ref="purapAccountingService" />
+        <property name="businessObjectService" ref="businessObjectService" />
+        <property name="purapWorkflowIntegrationService" ref="purapWorkflowIntegrationService" />
+        <property name="workflowDocumentService" ref="workflowDocumentService" />
+        <property name="vendorService" ref="vendorService" />
+        <property name="dataDictionaryService" ref="dataDictionaryService" />
+        <property name="universityDateService" ref="universityDateService"/>
+        <property name="paymentMethodGeneralLedgerPendingEntryService" ref="uaPaymentMethodGeneralLedgerPendingEntryService" />
+    </bean>
+	
+	<!-- KITT-2850 - use the custom auto approve service to catch validation errors without rolling back -->
+    <bean id="paymentRequestAutoApproveService" class="edu.arizona.kfs.module.purap.document.service.impl.PaymentRequestAutoApproveServiceImpl">
+		<property name="dateTimeService" ref="dateTimeService" />
+		<property name="paymentRequestDao" ref="paymentRequestDao" />
+        <property name="parameterService" ref="parameterService" />
+        <property name="paymentRequestService" ref="paymentRequestService" />
+        <property name="kualiConfigurationService" ref="kualiConfigurationService"/>
+        <property name="batchFileDirectoryName" value="${reports.directory}/purap"/>
+    </bean>
+    <!-- KITT-2850 - use the custom auto approve service to catch validation errors without rolling back -->
+    <bean id="autoApprovePaymentRequestsStep" class="org.kuali.kfs.module.purap.batch.AutoApprovePaymentRequestsStep" parent="step">
+        <property name="paymentRequestService" ref="paymentRequestAutoApproveService" />
+        <property name="parameterService" ref="parameterService" />
+        <property name="dateTimeService" ref="dateTimeService"/>
+    </bean>
+    
+
+	<!-- KITT-592 - replace the credit memo service with one which uses the new payment method-based GL entry generator  -->
+	<bean id="creditMemoService" class="edu.arizona.kfs.module.purap.document.service.impl.UaCreditMemoServiceImpl">
+        <property name="accountsPayableService" ref="accountsPayableService" />
+		<property name="creditMemoDao" ref="creditMemoDao" />
+        <property name="dataDictionaryService" ref="dataDictionaryService" />
+        <property name="documentService" ref="documentService" />
+        <property name="kualiConfigurationService" ref="kualiConfigurationService" />
+        <property name="noteService" ref="noteService" />
+        <property name="paymentRequestService" ref="paymentRequestService" />
+        <property name="purapAccountingService" ref="purapAccountingService" />
+        <property name="purapGeneralLedgerService" ref="purapGeneralLedgerService" />
+        <property name="purapService" ref="purapService" />
+        <property name="purchaseOrderService" ref="purchaseOrderService" />
+        <property name="vendorService" ref="vendorService" />
+        <property name="workflowDocumentService" ref="workflowDocumentService" />
+        <property name="paymentMethodGeneralLedgerPendingEntryService" ref="uaPaymentMethodGeneralLedgerPendingEntryService" />
+    </bean>
+
+	<!-- KITT-592 : updated E-Invoice processing to handle payment method -->
+	<bean id="electronicInvoiceHelperService" class="edu.arizona.kfs.module.purap.service.impl.UaElectronicInvoiceHelperServiceImpl">
+		<property name="electronicInvoicingDao" ref="electronicInvoicingDao" />
+        <property name="electronicInvoiceInputFileType" ref="electronicInvoiceInputFileType" />
+		<property name="electronicInvoiceMatchingService" ref="electronicInvoiceMatchingService"/>
+		<property name="mailService" ref="mailService"/>
+		<property name="batchInputFileService" ref="batchInputFileService" />
+		<property name="vendorService" ref="vendorService"/>
+		<property name="purchaseOrderService" ref="purchaseOrderService" />
+        <property name="paymentRequestService" ref="paymentRequestService" />
+        <property name="kualiConfigurationService" ref="kualiConfigurationService"/>
+        <property name="dateTimeService" ref="dateTimeService" />
+        <property name="documentService" ref="documentService" />
+        <property name="workflowDocumentService" ref="workflowDocumentService" />
+        <property name="parameterService" ref="parameterService"/>
+	</bean>
+
+	<import resource="document/validation/configuration/PurapValidatorOverrides.xml" />
+
+	<!-- START MOD - MOD-PA1009-02 -->
+    <bean id="purapService" class="edu.arizona.kfs.module.purap.document.service.impl.UaPurapServiceImpl">
+        <property name="businessObjectService" ref="businessObjectService"/>
+        <property name="dataDictionaryService" ref="dataDictionaryService"/>
+        <property name="dateTimeService" ref="dateTimeService"/>
+        <property name="documentService" ref="documentService"/>
+        <property name="noteService" ref="noteService"/>
+        <property name="parameterService" ref="parameterService"/>
+        <property name="persistenceService" ref="persistenceService"/>
+        <property name="purchaseOrderService" ref="purchaseOrderService"/>
+        <property name="universityDateService" ref="universityDateService"/>
+        <property name="vendorService" ref="vendorService"/>
+        <property name="taxService" ref="taxService"/>
+        <property name="purapAccountingService" ref="purapAccountingService"/>
+    </bean>
+	<!-- END MOD -->
+
+	<bean id="purapAccountingService" class="edu.arizona.kfs.module.purap.service.impl.PurapAccountingServiceImpl">
+		<property name="parameterService" ref="parameterService"/>
+		<property name="purApAccountingDao" ref="purApAccountingDao"/>
+		<property name="purapService" ref="purapService"/>
+	</bean>
+
+	<!-- validations -->
+	<!-- KITT-803 -->
+	
+	<import resource="document/validation/configuration/RequisitionValidation.xml" />
+	<import resource="document/validation/configuration/PaymentRequestValidation.xml" />
+</beans>
+
